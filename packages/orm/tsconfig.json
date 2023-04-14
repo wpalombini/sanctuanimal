@@ -1,0 +1,11 @@
+{
+  "extends": "tsconfig/base.json",
+  "include": ["."],
+  "compilerOptions": {
+    "lib": ["ESNext"],
+    "outDir": "dist",
+    "sourceMap": false,
+    "declarationMap": false
+  },
+  "exclude": ["dist", "build", "node_modules"]
+}

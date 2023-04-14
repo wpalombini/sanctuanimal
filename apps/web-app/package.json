@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@sanctuanimal/orm": "workspace:*",
     "next": "^13.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -16,6 +17,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.21.4",
+    "@prisma/nextjs-monorepo-workaround-plugin": "^4.12.0",
     "@types/node": "^18.15.11",
     "@types/react": "^18.0.32",
     "@types/react-dom": "^18.0.11",

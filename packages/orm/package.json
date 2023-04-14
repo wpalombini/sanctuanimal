@@ -1,0 +1,19 @@
+{
+  "name": "@sanctuanimal/orm",
+  "version": "0.0.1",
+  "main": "./generated/index.js",
+  "types": "./generated/index.d.ts",
+  "scripts": {
+    "build": "prisma generate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "prisma": "^4.12.0",
+    "tsconfig": "workspace:*"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.12.0"
+  }
+}
