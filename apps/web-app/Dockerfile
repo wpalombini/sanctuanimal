@@ -33,6 +33,8 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 USER nextjs
 
+COPY --from=builder /app/out/full/packages/orm/prisma/ ./prisma
+
 COPY --from=installer /app/apps/web-app/next.config.js .
 COPY --from=installer /app/apps/web-app/package.json .
 
@@ -44,4 +46,4 @@ COPY --from=installer --chown=nextjs:nodejs /app/apps/web-app/.next/static ./app
 
 EXPOSE 3000
 
-CMD node apps/web-app/server.js
+CMD npx prisma migrate deploy;node apps/web-app/server.js
