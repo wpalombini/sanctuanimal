@@ -10,12 +10,13 @@
     "build": "turbo run build --no-daemon",
     "dev": "turbo run dev --no-daemon",
     "lint": "turbo run lint --no-daemon",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --check \"**/*.{ts,tsx,md}\"",
+    "format:fix": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "eslint-config-custom": "workspace:*",
-    "prettier": "latest",
-    "turbo": "latest"
+    "@sanctuanimal/eslint-config": "workspace:*",
+    "prettier": "^2.8.7",
+    "turbo": "^1.9.1"
   },
   "engines": {
     "node": ">=18.0.0"
