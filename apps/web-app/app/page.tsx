@@ -23,7 +23,6 @@ const Web = async () => {
 
   return (
     <div>
-      <h1>SanctuAnimal</h1>
       {user && (
         <div>
           <div>id: {user.id}</div>
