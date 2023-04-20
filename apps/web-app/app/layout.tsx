@@ -1,5 +1,5 @@
-import { Container } from '../components/ui/container';
-import { ThemeProvider } from '../components/ui/theme-provider-client';
+import { Container } from '@/components/ui/container';
+import { ThemeProvider } from '@/components/ui/theme-provider-client';
 
 export const metadata = {
   title: 'SanctuAnimal',
