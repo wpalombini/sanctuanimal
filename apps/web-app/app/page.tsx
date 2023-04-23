@@ -1,7 +1,9 @@
 import { PrismaClient } from '@sanctuanimal/orm';
 
 const getUser = async () =>
-  await fetch(`${process.env.BASE_URL}/api/user`, { cache: 'no-store' }).then(res => res.json());
+  await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/user`, { cache: 'no-store' }).then(res =>
+    res.json(),
+  );
 
 // const test = async () => {
 //   const prisma = new PrismaClient();

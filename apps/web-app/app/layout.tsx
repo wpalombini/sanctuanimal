@@ -1,4 +1,5 @@
-import { Container, NavBar, ThemeProvider } from '@/components/ui';
+import { AuthProvider, ThemeProvider } from '@/components/providers';
+import { Container, NavBar } from '@/components/ui';
 
 export const metadata = {
   title: 'SanctuAnimal',
@@ -8,12 +9,14 @@ export const metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
-      <ThemeProvider>
-        <body>
-          <NavBar />
-          <Container maxWidth="xl">{children}</Container>
-        </body>
-      </ThemeProvider>
+      <AuthProvider>
+        <ThemeProvider>
+          <body>
+            <NavBar />
+            <Container maxWidth="xl">{children}</Container>
+          </body>
+        </ThemeProvider>
+      </AuthProvider>
     </html>
   );
 };

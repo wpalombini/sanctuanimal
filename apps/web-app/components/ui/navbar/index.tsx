@@ -1,6 +1,9 @@
 'use client';
 
+import { loginWithGoogle, logout } from 'lib/firebase';
 import Link from 'next/link';
+
+import { useAuthContext } from '@/components/providers';
 
 import { AppBar } from '../appbar';
 import { Container } from '../container';
@@ -9,6 +12,20 @@ import { Toolbar } from '../toolbar';
 import { Typography } from '../typography';
 
 export const NavBar = () => {
+  const { loading, user } = useAuthContext();
+
+  const handleLogin = () => {
+    if (loading) return;
+
+    loginWithGoogle().catch(err => {
+      console.error(err);
+    });
+  };
+
+  const handleLogout = () => {
+    logout();
+  };
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -18,9 +35,9 @@ export const NavBar = () => {
               SanctuAnimal
             </LinkUI>
           </Typography>
-          <LinkUI color={'inherit'} component={Link} href="/residents">
-            Residents
-          </LinkUI>
+          {!!user && user?.displayName}
+          <button onClick={handleLogin}>Login</button>
+          <button onClick={handleLogout}>Logout</button>
         </Toolbar>
       </Container>
     </AppBar>
