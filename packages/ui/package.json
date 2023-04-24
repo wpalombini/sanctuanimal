@@ -1,10 +1,14 @@
 {
-  "name": "ui",
+  "name": "@sanctuanimal/ui",
   "version": "0.0.1",
-  "main": "./index.tsx",
-  "types": "./index.tsx",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "license": "MIT",
   "scripts": {
+    "clean": "shx rm -rf dist",
+    "build": "pnpm clean && tsc",
+    "build:watch": "pnpm clean && tsc --watch",
+    "dev": "pnpm build:watch",
     "lint": "eslint \"**/*.ts*\""
   },
   "devDependencies": {
@@ -13,6 +17,7 @@
     "@types/react-dom": "^18.0.11",
     "eslint": "^8.38.0",
     "react": "^18.2.0",
+    "shx": "^0.3.4",
     "tsconfig": "workspace:*",
     "typescript": "^5.0.4"
   },
@@ -20,6 +25,7 @@
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@fontsource/roboto": "^4.5.8",
+    "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.12.0"
   }
 }

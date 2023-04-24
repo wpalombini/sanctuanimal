@@ -1,5 +1,10 @@
 export { AppBar } from './appbar';
+export { Button } from './button';
 export { Container } from './container';
+export { IconButton } from './icon-button';
+export { AccountCircle } from './icons';
+export { Menu } from './menu';
+export { MenuItem } from './menu-item';
 export { NavBar } from './navbar';
 export { Toolbar } from './toolbar';
 export { Typography } from './typography';
