@@ -6,7 +6,6 @@ module.exports = {
   reactStrictMode: true,
   output: 'standalone',
   experimental: {
-    appDir: true,
     outputFileTracingRoot: path.join(__dirname, '../../'),
   },
   webpack: (config, { isServer }) => {

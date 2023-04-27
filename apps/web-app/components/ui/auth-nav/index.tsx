@@ -1,15 +1,16 @@
-import { Spinner } from '@sanctuanimal/ui';
-import { useRouter } from 'next/navigation';
+import {
+  AccountCircle,
+  Button,
+  IconButton,
+  Menu,
+  MenuItem,
+  Spinner,
+  Typography,
+} from '@sanctuanimal/ui';
+import { useRouter } from 'next/router';
 
 import { useAuthContext } from '@/components/providers';
 import { useNavBarStore } from '@/lib/stores';
-
-import { Button } from '../button';
-import { IconButton } from '../icon-button';
-import { AccountCircle } from '../icons';
-import { Menu } from '../menu';
-import { MenuItem } from '../menu-item';
-import { Typography } from '../typography';
 
 export const AuthNav = () => {
   const router = useRouter();

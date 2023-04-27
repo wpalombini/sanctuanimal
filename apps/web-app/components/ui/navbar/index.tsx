@@ -1,14 +1,9 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
+import { AppBar, Container, Toolbar, Typography } from '@sanctuanimal/ui';
+import { useRouter } from 'next/router';
 
 import { useNavBarStore } from '@/lib/stores';
 
-import { AppBar } from '../appbar';
 import { AuthNav } from '../auth-nav';
-import { Container } from '../container';
-import { Toolbar } from '../toolbar';
-import { Typography } from '../typography';
 
 export const NavBar = () => {
   const router = useRouter();

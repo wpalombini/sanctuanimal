@@ -22,7 +22,9 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
+    "@emotion/cache": "^11.10.7",
     "@emotion/react": "^11.10.6",
+    "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.10.6",
     "@fontsource/roboto": "^4.5.8",
     "@mui/icons-material": "^5.11.16",

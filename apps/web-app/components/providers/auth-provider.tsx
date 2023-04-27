@@ -1,13 +1,12 @@
-'use client';
-
 import {
   auth,
   loginWithGoogle,
   logout,
-  onAuthStateChanged,
+  onIdTokenChanged,
   User,
   UserCredential,
 } from 'lib/firebase';
+import { destroyCookie, setCookie } from 'nookies';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 type AuthContextType = {
@@ -25,10 +24,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   // const [error, setError] = useState<Error | undefined>();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, user => {
+    const unsubscribe = onIdTokenChanged(auth, async user => {
       if (user) {
+        const idToken = await user.getIdToken();
+        // set a cookie for page level authorization
+        setCookie(null, 'app-auth', idToken, { path: '/' });
+
+        // go to the api, validate idToken and get user and sanctuary from db.
+        // if user does not exist, create it out of idToken while on the api.
+        // if sanctuary does not exist, redirect the user to create sanctuary page.
+
         setUser(user);
       } else {
+        destroyCookie(null, 'app-auth');
         setUser(null);
       }
       setLoading(false);

@@ -11,7 +11,7 @@ import {
 import { isEnvProduction } from '../utils';
 
 export type { User, UserCredential } from 'firebase/auth';
-export { onAuthStateChanged } from 'firebase/auth';
+export { onIdTokenChanged } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -30,6 +30,10 @@ export const auth = getAuth(firebaseApp);
 if (!isEnvProduction()) {
   connectAuthEmulator(auth, 'http://localhost:9099');
 }
+
+export const getUserTokenId = async (): Promise<string | undefined> => {
+  return await auth.currentUser?.getIdToken(false);
+};
 
 export const loginWithGoogle = async (): Promise<UserCredential> => {
   const provider = new GoogleAuthProvider();
