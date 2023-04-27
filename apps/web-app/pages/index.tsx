@@ -1,15 +1,12 @@
+import { trpc } from '@/lib/http/client/trpc';
+
 const HomePage = () => {
+  const { data } = trpc.hello.useQuery({ text: 'Walter' });
+
   return (
     <>
       <h2>Home Page</h2>
-      <div>
-        {/* {user && (
-        <div>
-          <div>id: {user.id}</div>
-          <div>name: {user.name}</div>
-        </div>
-      )} */}
-      </div>
+      <div>Message is: {data?.greeting}</div>
     </>
   );
 };
