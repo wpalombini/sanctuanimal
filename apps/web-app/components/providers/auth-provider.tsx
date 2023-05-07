@@ -1,13 +1,15 @@
+import { destroyCookie, setCookie } from 'nookies';
+import { createContext, useContext, useEffect, useState } from 'react';
+
 import {
   auth,
   loginWithGoogle,
-  logout,
+  logout as rawLogout,
   onIdTokenChanged,
   User,
   UserCredential,
-} from 'lib/firebase';
-import { destroyCookie, setCookie } from 'nookies';
-import { createContext, useContext, useEffect, useState } from 'react';
+} from '@/lib/firebase/client';
+import { trpc } from '@/lib/http/client/trpc';
 
 type AuthContextType = {
   loading: boolean;
@@ -22,6 +24,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   // const [error, setError] = useState<Error | undefined>();
+  const { invalidate } = trpc.useContext();
+
+  const logout = () => {
+    invalidate();
+    return rawLogout();
+  };
 
   useEffect(() => {
     const unsubscribe = onIdTokenChanged(auth, async user => {

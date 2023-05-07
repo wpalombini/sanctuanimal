@@ -45,6 +45,7 @@ export const AuthNav = () => {
 
   return (
     <>
+      <Button onClick={() => handleNavigateTo('residents')}>Residents</Button>
       {!user && (
         <Button onClick={handleLogin} color="inherit">
           {loading ? <Spinner /> : 'Login'}

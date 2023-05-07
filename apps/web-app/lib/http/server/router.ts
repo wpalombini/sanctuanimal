@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { procedure, router } from './trpc';
+import { procedure, protectedProcedure, router } from './trpc';
 
 export const appRouter = router({
   hello: procedure
@@ -9,9 +9,21 @@ export const appRouter = router({
         text: z.string(),
       }),
     )
-    .query(({ input }) => {
+    .query(opts => {
       return {
-        greeting: `hello ${input.text}`,
+        greeting: `hello ${opts.input.text}`,
+      };
+    }),
+  secret: protectedProcedure
+    .input(
+      z.object({
+        text: z.string(),
+      }),
+    )
+    .query(opts => {
+      console.log('uid from context', opts.ctx.uid);
+      return {
+        greeting: `hello ${opts.input.text}`,
       };
     }),
 });

@@ -8,7 +8,7 @@ import {
   UserCredential,
 } from 'firebase/auth';
 
-import { isEnvProduction } from '../utils';
+import { isEnvProduction } from '../../utils';
 
 export type { User, UserCredential } from 'firebase/auth';
 export { onIdTokenChanged } from 'firebase/auth';

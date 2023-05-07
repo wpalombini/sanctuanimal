@@ -1,7 +1,7 @@
 import { httpBatchLink } from '@trpc/client';
 import { createTRPCNext } from '@trpc/next';
 
-import { getUserTokenId } from '@/lib/firebase';
+import { getUserTokenId } from '@/lib/firebase/client';
 
 import { AppRouter } from '../server/router';
 
@@ -18,8 +18,9 @@ export const trpc = createTRPCNext<AppRouter>({
 
           // You can pass any HTTP headers you wish here
           async headers() {
+            const token = await getUserTokenId();
             return {
-              Authorization: await getUserTokenId(),
+              authorization: `Bearer ${token || ''}`,
             };
           },
         }),
