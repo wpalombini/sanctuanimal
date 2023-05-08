@@ -1,12 +1,12 @@
 import { createTheme } from '@mui/material';
-import { blue, deepOrange } from '@mui/material/colors';
+import { blue, deepOrange, grey } from '@mui/material/colors';
 
 export const theme = createTheme({
   palette: {
     primary: blue,
     secondary: deepOrange,
     background: {
-      default: '#eee',
+      default: grey[200],
     },
   },
   components: {
@@ -14,6 +14,13 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           textDecoration: 'none',
+        },
+      },
+    },
+    MuiCardHeader: {
+      styleOverrides: {
+        root: {
+          borderBottom: `solid 1px ${grey[300]}`,
         },
       },
     },

@@ -6,7 +6,9 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <NavBar />
-      <Container maxWidth="xl">{children}</Container>
+      <Container maxWidth="xl" sx={{ paddingTop: '20px' }}>
+        {children}
+      </Container>
     </>
   );
 };
