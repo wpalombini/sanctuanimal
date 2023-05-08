@@ -1,1 +1,1 @@
-export * from './get-sanctuaries-for-accout';
+export * from './get-sanctuaries-for-account';

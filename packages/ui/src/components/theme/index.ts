@@ -10,6 +10,11 @@ export const theme = createTheme({
     },
   },
   components: {
+    MuiButton: {
+      defaultProps: {
+        variant: 'contained',
+      },
+    },
     MuiLink: {
       styleOverrides: {
         root: {
@@ -22,6 +27,15 @@ export const theme = createTheme({
         root: {
           borderBottom: `solid 1px ${grey[300]}`,
         },
+      },
+    },
+    MuiTextField: {
+      defaultProps: {
+        InputLabelProps: {
+          shrink: true,
+        },
+        fullWidth: true,
+        variant: 'outlined',
       },
     },
   },

@@ -45,9 +45,8 @@ export const AuthNav = () => {
 
   return (
     <>
-      <Button onClick={() => handleNavigateTo('residents')}>Residents</Button>
       {!user && (
-        <Button onClick={handleLogin} color="inherit">
+        <Button onClick={handleLogin} color="inherit" variant="text">
           {loading ? <Spinner /> : 'Login'}
         </Button>
       )}
@@ -75,7 +74,10 @@ export const AuthNav = () => {
             <MenuItem key={1} onClick={() => handleNavigateTo('residents')}>
               <Typography textAlign="center">Residents</Typography>
             </MenuItem>
-            <MenuItem key={2} onClick={handleLogout}>
+            <MenuItem key={2} onClick={() => handleNavigateTo('account')}>
+              <Typography textAlign="center">Account</Typography>
+            </MenuItem>
+            <MenuItem key={3} onClick={handleLogout}>
               <Typography textAlign="center">Logout</Typography>
             </MenuItem>
           </Menu>

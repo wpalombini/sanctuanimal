@@ -14,7 +14,7 @@ model User {
   email       String      @unique @db.VarChar(100)
   externalId  String      @db.VarChar(255)
   createdAt   DateTime    @default(now()) @db.Timestamptz(3)
-  deletedAt   DateTime?   @updatedAt @db.Timestamptz(3)
+  deletedAt   DateTime?   @db.Timestamptz(3)
   updatedAt   DateTime    @updatedAt @db.Timestamptz(3)
   sanctuaries Sanctuary[]
 }
@@ -24,7 +24,7 @@ model Sanctuary {
   contact   String    @db.VarChar(100)
   name      String    @db.VarChar(100)
   createdAt DateTime  @default(now()) @db.Timestamptz(3)
-  deletedAt DateTime? @updatedAt @db.Timestamptz(3)
+  deletedAt DateTime? @db.Timestamptz(3)
   updatedAt DateTime  @updatedAt @db.Timestamptz(3)
   user      User?     @relation(fields: [userId], references: [id])
   userId    String?   @db.VarChar(36)

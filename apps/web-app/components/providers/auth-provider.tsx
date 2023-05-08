@@ -35,7 +35,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const logout = () => {
     invalidate();
-    return rawLogout();
+    return rawLogout().finally(() => {
+      router.replace('/');
+    });
   };
 
   useEffect(() => {
