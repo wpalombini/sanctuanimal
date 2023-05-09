@@ -1,8 +1,8 @@
-import { createOrUpdateSanctuary, getSanctuariesForAccount } from './routes';
+import { getSanctuariesForAccount, upsertSanctuary } from './routes';
 import { router } from './trpc';
 
 export const appRouter = router({
-  createOrUpdateSanctuary: createOrUpdateSanctuary(),
+  upsertSanctuary: upsertSanctuary(),
   getSanctuariesForAccount: getSanctuariesForAccount(),
 });
 

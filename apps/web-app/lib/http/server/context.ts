@@ -13,6 +13,7 @@ export const createContext = async ({ req }: trpcNext.CreateNextContextOptions) 
 
       return null;
     } catch (error) {
+      console.log('Error getUserFromJWT', error);
       return null;
     }
   };
