@@ -10,6 +10,13 @@ export const theme = createTheme({
     },
   },
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          userSelect: 'none',
+        },
+      },
+    },
     MuiButton: {
       defaultProps: {
         variant: 'contained',
