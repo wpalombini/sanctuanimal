@@ -47,7 +47,7 @@ export const AuthNav = () => {
     <>
       {!user && (
         <Button onClick={handleLogin} color="inherit" variant="text">
-          {loading ? <Spinner /> : 'Login'}
+          {loading ? <Spinner color="white" /> : 'Login'}
         </Button>
       )}
       {!!user && (

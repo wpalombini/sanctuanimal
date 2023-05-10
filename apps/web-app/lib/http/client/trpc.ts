@@ -6,7 +6,7 @@ import { getUserTokenId } from '@/lib/firebase/client';
 import { AppRouter } from '../server/router';
 
 export const trpc = createTRPCNext<AppRouter>({
-  config({ ctx }) {
+  config() {
     return {
       queryClientConfig: {
         defaultOptions: {

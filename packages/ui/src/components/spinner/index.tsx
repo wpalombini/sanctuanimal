@@ -1,5 +1,7 @@
 import { css, keyframes } from '@emotion/react';
 
+import { theme } from '../theme';
+
 const animloader = keyframes`
   0%,
   80%,
@@ -37,7 +39,7 @@ export type SpinnerProps = {
   color?: string;
 };
 
-export const Spinner = ({ color = 'white' }: SpinnerProps) => {
+export const Spinner = ({ color = theme.palette.primary.main }: SpinnerProps) => {
   return (
     <div css={mainBallCss}>
       <div css={[ballOne, { background: color }]}></div>
