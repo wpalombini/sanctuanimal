@@ -1,0 +1,30 @@
+import { LinearProgress } from '@sanctuanimal/ui';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+
+const NavigationLoadingBar = () => {
+  const [isNavigating, setIsNavigating] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    router.events.on('routeChangeStart', () => {
+      setIsNavigating(true);
+    });
+    router.events.on('routeChangeComplete', () => {
+      setIsNavigating(false);
+    });
+    return () => {
+      router.events.off('routeChangeComplete', () => {
+        console.log('stopped');
+      });
+    };
+  }, [router.events]);
+
+  return (
+    <div style={{ height: '4px', position: 'sticky' }}>
+      {isNavigating && <LinearProgress color="secondary" />}
+    </div>
+  );
+};
+
+export default NavigationLoadingBar;

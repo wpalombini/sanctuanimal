@@ -6,11 +6,14 @@ import { useAuthContext } from '@/components/providers';
 import SanctuaryDetails from '@/components/sanctuary/sanctuary-details';
 import SpinnerPage from '@/components/ui/spinner-page';
 import { trpc } from '@/lib/http/client/trpc';
+import { useNotificationStore } from '@/lib/stores';
+import { NotificationError, NotificationSuccess } from '@/lib/types';
 
 const AccountPage = () => {
   const [editSanctuary, setEditSanctuary] = useState(false);
   const [editAccount, setEditAccount] = useState(false);
   const { user, loading: userIsLoading } = useAuthContext();
+  const { setNotification } = useNotificationStore();
 
   const utils = trpc.useContext();
 
@@ -31,10 +34,11 @@ const AccountPage = () => {
       onSuccess() {
         invalidateGetSanctuariesForAccount();
         setEditSanctuary(false);
-        // display successful message (toast)
+        setNotification(NotificationSuccess);
       },
       onError(error) {
         console.log('onError', error);
+        setNotification(NotificationError);
       },
     });
 
@@ -43,10 +47,11 @@ const AccountPage = () => {
       onSuccess() {
         invalidateGetSanctuariesForAccount();
         setEditAccount(false);
-        // display successful message (toast)
+        setNotification(NotificationSuccess);
       },
       onError(error) {
         console.log('onError', error);
+        setNotification(NotificationError);
       },
     });
 
