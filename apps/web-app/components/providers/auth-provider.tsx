@@ -12,6 +12,8 @@ import {
   UserCredential,
 } from '@/lib/firebase/client';
 import { trpc } from '@/lib/http/client/trpc';
+import { useNotificationStore } from '@/lib/stores';
+import { Notification, NotificationType } from '@/lib/types';
 
 type AuthContextType = {
   loading: boolean;
@@ -28,11 +30,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   // const [error, setError] = useState<Error | undefined>();
+
   const queryClient = useQueryClient();
   const { data: sanctuariesData } = trpc.getSanctuariesForAccount.useQuery(undefined, {
     enabled: !!user,
     staleTime: Infinity,
   });
+
+  const { setNotification } = useNotificationStore();
 
   const router = useRouter();
 
@@ -77,18 +82,29 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, [sanctuariesData, user]);
 
   useEffect(() => {
-    const onRouteChangeComplete = () => {
-      if (!user && !publicPaths.includes(window.location.pathname.toLowerCase())) {
+    const onRouteChangeComplete = async () => {
+      const idToken = await user?.getIdToken();
+      if (!loading && !idToken && !publicPaths.includes(window.location.pathname.toLowerCase())) {
+        // notify user about invalid session.
+        setNotification({
+          message: 'Your session expired, please login.',
+          type: NotificationType.Warning,
+        } as Notification);
+        // execute proper logout process.
         logout();
       }
     };
+
+    // this needs to be called here,
+    // as route event does not track the first page (app) load.
+    onRouteChangeComplete();
 
     router.events.on('routeChangeComplete', onRouteChangeComplete);
     return () => {
       router.events.off('routeChangeComplete', onRouteChangeComplete);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.events, user]);
+  }, [router.events, user, loading]);
 
   return (
     <AuthContext.Provider value={{ loading, loginWithGoogle, logout, user }}>
