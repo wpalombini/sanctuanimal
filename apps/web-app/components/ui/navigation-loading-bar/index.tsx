@@ -7,16 +7,20 @@ const NavigationLoadingBar = () => {
   const router = useRouter();
 
   useEffect(() => {
-    router.events.on('routeChangeStart', () => {
+    const onRouteChangeStart = () => {
       setIsNavigating(true);
-    });
-    router.events.on('routeChangeComplete', () => {
+    };
+
+    const onRouteChangeComplete = () => {
       setIsNavigating(false);
-    });
+    };
+
+    router.events.on('routeChangeStart', onRouteChangeStart);
+    router.events.on('routeChangeComplete', onRouteChangeComplete);
+
     return () => {
-      router.events.off('routeChangeComplete', () => {
-        console.log('stopped');
-      });
+      router.events.off('routeChangeStart', onRouteChangeStart);
+      router.events.off('routeChangeComplete', onRouteChangeComplete);
     };
   }, [router.events]);
 

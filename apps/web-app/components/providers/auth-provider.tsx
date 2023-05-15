@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { destroyCookie, setCookie } from 'nookies';
 import { createContext, useContext, useEffect, useState } from 'react';
@@ -19,13 +20,15 @@ type AuthContextType = {
   user: User | null;
 };
 
+const publicPaths = ['/'];
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   // const [error, setError] = useState<Error | undefined>();
-  const { invalidate } = trpc.useContext();
+  const queryClient = useQueryClient();
   const { data: sanctuariesData } = trpc.getSanctuariesForAccount.useQuery(undefined, {
     enabled: !!user,
     staleTime: Infinity,
@@ -33,11 +36,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const router = useRouter();
 
-  const logout = () => {
-    invalidate();
-    return rawLogout().finally(() => {
+  const logout = async () => {
+    queryClient.removeQueries();
+
+    try {
+      return await rawLogout();
+    } finally {
       router.replace('/');
-    });
+    }
   };
 
   useEffect(() => {
@@ -69,6 +75,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sanctuariesData, user]);
+
+  useEffect(() => {
+    const onRouteChangeComplete = () => {
+      if (!user && !publicPaths.includes(window.location.pathname.toLowerCase())) {
+        logout();
+      }
+    };
+
+    router.events.on('routeChangeComplete', onRouteChangeComplete);
+    return () => {
+      router.events.off('routeChangeComplete', onRouteChangeComplete);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.events, user]);
 
   return (
     <AuthContext.Provider value={{ loading, loginWithGoogle, logout, user }}>
