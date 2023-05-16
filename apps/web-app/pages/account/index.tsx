@@ -1,4 +1,5 @@
-import { Container } from '@sanctuanimal/ui';
+import { Box, Button, Container } from '@sanctuanimal/ui';
+import isEmpty from 'lodash-es/isEmpty';
 import { useState } from 'react';
 
 import AccountDetails from '@/components/account/account-details';
@@ -70,6 +71,12 @@ const AccountPage = () => {
         '> *': { marginBottom: '20px', width: { xs: '100%', lg: '75%' } },
       }}
     >
+      {!isEmpty(sanctuariesData?.sanctuaries) && (
+        <Box component="section" sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Button sx={{ width: { xs: '100%', sm: '25%' } }}>New animal</Button>
+        </Box>
+      )}
+
       <SanctuaryDetails
         editSanctuary={editSanctuary}
         isMutating={upsertSanctuaryIsMutating}
