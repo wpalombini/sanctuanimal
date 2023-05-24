@@ -19,11 +19,11 @@ COPY .gitignore .gitignore
 COPY .prettierrc .prettierrc
 COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
-RUN npm i -g pnpm
-RUN pnpm install
+COPY --from=builder /app/out/full/ .
 
 # Build the project
-COPY --from=builder /app/out/full/ .
+RUN npm i -g pnpm
+RUN pnpm install --frozen-lockfile
 RUN pnpm turbo run build --filter=web-app...
 
 FROM node:18-alpine AS runner
