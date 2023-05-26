@@ -1,5 +1,6 @@
 import { Box, Button, Container } from '@sanctuanimal/ui';
 import isEmpty from 'lodash-es/isEmpty';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import AccountDetails from '@/components/account/account-details';
@@ -11,6 +12,7 @@ import { useNotificationStore } from '@/lib/stores';
 import { NotificationError, NotificationSuccess } from '@/lib/types';
 
 const AccountPage = () => {
+  const router = useRouter();
   const [editSanctuary, setEditSanctuary] = useState(false);
   const [editAccount, setEditAccount] = useState(false);
   const { user, loading: userIsLoading } = useAuthContext();
@@ -73,7 +75,12 @@ const AccountPage = () => {
     >
       {!isEmpty(sanctuariesData?.sanctuaries) && (
         <Box component="section" sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <Button sx={{ width: { xs: '100%', sm: '25%' } }}>New animal</Button>
+          <Button
+            onClick={() => router.push('/residents/new')}
+            sx={{ width: { xs: '100%', sm: '25%' } }}
+          >
+            New resident
+          </Button>
         </Box>
       )}
 

@@ -7,15 +7,28 @@ import {
   Spinner,
   Typography,
 } from '@sanctuanimal/ui';
+import isEmpty from 'lodash-es/isEmpty';
 import { useRouter } from 'next/router';
+import { useMemo } from 'react';
 
 import { useAuthContext } from '@/components/providers';
+import { trpc } from '@/lib/http/client/trpc';
 import { useNavBarStore } from '@/lib/stores';
 
 export const AuthNav = () => {
   const router = useRouter();
   const { anchorElUser, setAnchorElUser } = useNavBarStore();
   const { loginWithGoogle, logout, loading, user } = useAuthContext();
+
+  const { data: sanctuariesData } = trpc.getSanctuariesForAccount.useQuery(undefined, {
+    enabled: !!user,
+    staleTime: Infinity,
+  });
+
+  const isSanctuarySetup = useMemo(
+    () => !isEmpty(sanctuariesData?.sanctuaries),
+    [sanctuariesData?.sanctuaries],
+  );
 
   const handleLogin = () => {
     if (loading) return;
@@ -71,13 +84,20 @@ export const AuthNav = () => {
             open={Boolean(anchorElUser)}
             onClose={handleCloseUserMenu}
           >
-            <MenuItem key={1} onClick={() => handleNavigateTo('residents')}>
-              <Typography textAlign="center">Residents</Typography>
-            </MenuItem>
-            <MenuItem key={2} onClick={() => handleNavigateTo('account')}>
+            {isSanctuarySetup && (
+              <MenuItem key={1} onClick={() => handleNavigateTo('/residents/new')}>
+                <Typography textAlign="center">New Resident</Typography>
+              </MenuItem>
+            )}
+            {isSanctuarySetup && (
+              <MenuItem key={2} onClick={() => handleNavigateTo('/residents')}>
+                <Typography textAlign="center">Residents</Typography>
+              </MenuItem>
+            )}
+            <MenuItem key={3} onClick={() => handleNavigateTo('/account')}>
               <Typography textAlign="center">Account</Typography>
             </MenuItem>
-            <MenuItem key={3} onClick={handleLogout}>
+            <MenuItem key={4} onClick={handleLogout}>
               <Typography textAlign="center">Logout</Typography>
             </MenuItem>
           </Menu>
