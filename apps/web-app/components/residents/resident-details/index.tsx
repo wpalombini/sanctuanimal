@@ -1,10 +1,20 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, Card, CardContent, CardHeader, DatePicker, TextField } from '@sanctuanimal/ui';
+import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  DatePicker,
+  InputBase,
+  MenuItem,
+  TextField,
+} from '@sanctuanimal/ui';
 import dayjs from 'dayjs';
 import { Controller, useForm } from 'react-hook-form';
 import { TypeOf } from 'zod';
 
 import DatePickerContainer, { DatePickerActionBar } from '@/components/ui/date-picker-container';
+import { getLabelForGenderValue } from '@/lib/utils';
 import { upsertResidentSchema } from '@/lib/validation/resident-details.schema';
 
 type ResidentDetailsForm = TypeOf<typeof upsertResidentSchema>;
@@ -41,7 +51,9 @@ const ResidentDetails = ({ isMutating }: ResidentDetailsProps) => {
       <form onSubmit={residentForm.handleSubmit(onSubmitResidentDetailsHandler)}>
         <CardContent
           sx={{
-            '& .MuiTextField-root:not(:last-child)': { marginBottom: '40px' },
+            '& .MuiTextField-root:not(:last-child), .MuiFormControl-root': {
+              marginBottom: '40px',
+            },
           }}
         >
           <TextField
@@ -66,6 +78,44 @@ const ResidentDetails = ({ isMutating }: ResidentDetailsProps) => {
             helperText={residentForm.formState.errors.breed?.message || ''}
           />
           <Controller
+            name="gender"
+            control={residentForm.control}
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            defaultValue=""
+            render={({ field }) => (
+              <TextField
+                {...field}
+                id="gender"
+                select
+                label="Gender *"
+                defaultValue=""
+                error={!!residentForm.formState.errors.gender}
+                helperText={residentForm.formState.errors.gender?.message || ''}
+                SelectProps={{
+                  displayEmpty: true,
+                  defaultValue: '',
+                  renderValue: (value: unknown) => {
+                    const strValue = value as string;
+                    if (!strValue || strValue.length === 0) {
+                      return (
+                        <InputBase
+                          placeholder="Enter the resident gender"
+                          sx={{ '& input': { padding: 0 } }}
+                        />
+                      );
+                    } else {
+                      return <>{getLabelForGenderValue(strValue)}</>;
+                    }
+                  },
+                }}
+              >
+                <MenuItem value="F">{getLabelForGenderValue('F')}</MenuItem>
+                <MenuItem value="M">{getLabelForGenderValue('M')}</MenuItem>
+              </TextField>
+            )}
+          />
+          <Controller
             name="dateOfBirth"
             control={residentForm.control}
             defaultValue={null}
@@ -84,7 +134,7 @@ const ResidentDetails = ({ isMutating }: ResidentDetailsProps) => {
                       error: !!residentForm.formState.errors.dateOfBirth,
                       helperText: (residentForm.formState.errors.dateOfBirth?.message ||
                         '') as string,
-                      placeholder: 'Pick the resident date of birth',
+                      placeholder: 'Enter the resident date of birth',
                     },
                   }}
                 />
