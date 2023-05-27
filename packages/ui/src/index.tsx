@@ -5,6 +5,8 @@ export * from './components/box';
 export * from './components/button';
 export * from './components/card';
 export * from './components/container';
+export * from './components/date-picker';
+export * from './components/dialog';
 export * from './components/icon-button';
 export * from './components/icons/account-circle';
 export * from './components/icons/create';

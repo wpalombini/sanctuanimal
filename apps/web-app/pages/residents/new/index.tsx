@@ -1,8 +1,11 @@
+import ResidentDetails from '@/components/residents/resident-details';
+import PageBodyContainer from '@/components/ui/page-body-container';
+
 const NewResidentPage = () => {
   return (
-    <>
-      <h2>New Resident Page</h2>
-    </>
+    <PageBodyContainer>
+      <ResidentDetails isMutating={false} />
+    </PageBodyContainer>
   );
 };
 

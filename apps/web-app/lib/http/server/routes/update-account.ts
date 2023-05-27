@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server';
 
 import { prisma } from '@/lib/prisma';
-import { updateAccountSchema } from '@/lib/validation/account-schema';
+import { updateAccountSchema } from '@/lib/validation/account-details.schema';
 
 import { protectedProcedure } from '../trpc';
 

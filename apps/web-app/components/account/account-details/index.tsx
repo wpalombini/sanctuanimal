@@ -13,7 +13,7 @@ import { useForm } from 'react-hook-form';
 import { TypeOf } from 'zod';
 
 import { AccountOutput } from '@/lib/types';
-import { updateAccountSchema } from '@/lib/validation/account-schema';
+import { updateAccountSchema } from '@/lib/validation/account-details.schema';
 
 type AccountDetailsForm = TypeOf<typeof updateAccountSchema>;
 
@@ -67,7 +67,7 @@ const AccountDetails = ({
             }}
           >
             <TextField
-              label="Name"
+              label="Name *"
               placeholder="Enter the account name"
               defaultValue={account?.name || ''}
               {...accountForm.register('name')}

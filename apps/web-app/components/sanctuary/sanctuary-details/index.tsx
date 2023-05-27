@@ -13,7 +13,7 @@ import { useForm } from 'react-hook-form';
 import { TypeOf } from 'zod';
 
 import { SanctuariesOutput } from '@/lib/types';
-import { upsertSanctuarySchema } from '@/lib/validation/sanctuary-schema';
+import { upsertSanctuarySchema } from '@/lib/validation/sanctuary-details.schema';
 
 type SanctuaryDetailsForm = TypeOf<typeof upsertSanctuarySchema>;
 
@@ -67,7 +67,7 @@ const SanctuaryDetails = ({
             }}
           >
             <TextField
-              label="Name"
+              label="Name *"
               placeholder="Enter the sanctuary name"
               defaultValue={(sanctuaries && sanctuaries[0]?.name) || ''}
               {...sanctuaryForm.register('name')}
@@ -75,7 +75,7 @@ const SanctuaryDetails = ({
               helperText={sanctuaryForm.formState.errors.name?.message || ''}
             />
             <TextField
-              label="Contact"
+              label="Contact *"
               placeholder="A contact person at the sanctuary"
               defaultValue={(sanctuaries && sanctuaries[0]?.contact) || ''}
               {...sanctuaryForm.register('contact')}

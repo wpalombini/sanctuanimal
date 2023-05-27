@@ -1,4 +1,4 @@
-import { Box, Button, Container } from '@sanctuanimal/ui';
+import { Box, Button } from '@sanctuanimal/ui';
 import isEmpty from 'lodash-es/isEmpty';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -6,6 +6,7 @@ import { useState } from 'react';
 import AccountDetails from '@/components/account/account-details';
 import { useAuthContext } from '@/components/providers';
 import SanctuaryDetails from '@/components/sanctuary/sanctuary-details';
+import PageBodyContainer from '@/components/ui/page-body-container';
 import SpinnerPage from '@/components/ui/spinner-page';
 import { trpc } from '@/lib/http/client/trpc';
 import { useNotificationStore } from '@/lib/stores';
@@ -63,16 +64,7 @@ const AccountPage = () => {
   }
 
   return (
-    <Container
-      maxWidth={false}
-      disableGutters
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        flexDirection: 'column',
-        '> *': { marginBottom: '20px', width: { xs: '100%', lg: '75%' } },
-      }}
-    >
+    <PageBodyContainer>
       {!isEmpty(sanctuariesData?.sanctuaries) && (
         <Box component="section" sx={{ display: 'flex', justifyContent: 'flex-end' }}>
           <Button
@@ -98,7 +90,7 @@ const AccountPage = () => {
         setEditAccount={setEditAccount}
         updateAccount={updateAccount}
       />
-    </Container>
+    </PageBodyContainer>
   );
 };
 

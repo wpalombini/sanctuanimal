@@ -2,7 +2,7 @@ import { Prisma } from '@sanctuanimal/orm';
 import { TRPCError } from '@trpc/server';
 
 import { prisma } from '@/lib/prisma';
-import { upsertSanctuarySchema } from '@/lib/validation/sanctuary-schema';
+import { upsertSanctuarySchema } from '@/lib/validation/sanctuary-details.schema';
 
 import { protectedProcedure } from '../trpc';
 
