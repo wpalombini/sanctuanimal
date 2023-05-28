@@ -33,7 +33,7 @@ const validateDate = (fieldName: string) =>
         .datetime({ message: `Invalid ${fieldName}`, offset: true }),
     );
 
-export const upsertResidentSchema = z.object({
+export const createResidentSchema = z.object({
   name: validateString('Name'),
   species: validateString('Species'),
   breed: validateString('Breed'),
