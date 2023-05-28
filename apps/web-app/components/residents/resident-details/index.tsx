@@ -5,11 +5,17 @@ import ResidentDetailsEdit, { ResidentDetailsForm } from '../resident-details-ed
 export type ResidentDetailsProps = {
   editResident: boolean;
   isMutating: boolean;
+  residentData?: ResidentDetailsForm;
   // setEditResident: (value: boolean) => void;
   upsertResident: (values: ResidentDetailsForm) => void;
 };
 
-const ResidentDetails = ({ editResident, isMutating, upsertResident }: ResidentDetailsProps) => {
+const ResidentDetails = ({
+  editResident,
+  isMutating,
+  residentData,
+  upsertResident,
+}: ResidentDetailsProps) => {
   const onUpsertResident = (formData: ResidentDetailsForm) => {
     upsertResident(formData);
   };
@@ -18,7 +24,11 @@ const ResidentDetails = ({ editResident, isMutating, upsertResident }: ResidentD
     <Card>
       <CardHeader title="Resident details" />
       {editResident && (
-        <ResidentDetailsEdit isMutating={isMutating} upsertResident={onUpsertResident} />
+        <ResidentDetailsEdit
+          isMutating={isMutating}
+          residentData={residentData}
+          upsertResident={onUpsertResident}
+        />
       )}
     </Card>
   );

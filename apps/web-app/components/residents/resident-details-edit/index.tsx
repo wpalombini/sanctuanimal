@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, CardContent, DatePicker, InputBase, MenuItem, TextField } from '@sanctuanimal/ui';
+import dayjs from 'dayjs';
 import { Controller, useForm } from 'react-hook-form';
 import { TypeOf } from 'zod';
 
@@ -11,10 +12,15 @@ export type ResidentDetailsForm = TypeOf<typeof createResidentSchema>;
 
 type ResidentDetailsEditProps = {
   isMutating: boolean;
+  residentData?: ResidentDetailsForm;
   upsertResident: (values: ResidentDetailsForm) => void;
 };
 
-const ResidentDetailsEdit = ({ isMutating, upsertResident }: ResidentDetailsEditProps) => {
+const ResidentDetailsEdit = ({
+  isMutating,
+  residentData,
+  upsertResident,
+}: ResidentDetailsEditProps) => {
   const residentForm = useForm<ResidentDetailsForm>({
     mode: 'onChange',
     resolver: zodResolver(createResidentSchema),
@@ -33,7 +39,7 @@ const ResidentDetailsEdit = ({ isMutating, upsertResident }: ResidentDetailsEdit
   };
 
   return (
-    <form onSubmit={residentForm.handleSubmit(onSubmitResidentDetailsHandler)}>
+    <form autoComplete="off" onSubmit={residentForm.handleSubmit(onSubmitResidentDetailsHandler)}>
       <CardContent
         sx={{
           '& .MuiFormControl-root:not(:last-child)': {
@@ -45,6 +51,7 @@ const ResidentDetailsEdit = ({ isMutating, upsertResident }: ResidentDetailsEdit
           label="Name *"
           placeholder="Enter the resident name"
           {...residentForm.register('name')}
+          defaultValue={residentData?.name || ''}
           error={!!residentForm.formState.errors.name}
           helperText={residentForm.formState.errors.name?.message || ''}
         />
@@ -52,6 +59,7 @@ const ResidentDetailsEdit = ({ isMutating, upsertResident }: ResidentDetailsEdit
           label="Species *"
           placeholder="Enter the resident species"
           {...residentForm.register('species')}
+          defaultValue={residentData?.species || ''}
           error={!!residentForm.formState.errors.species}
           helperText={residentForm.formState.errors.species?.message || ''}
         />
@@ -59,6 +67,7 @@ const ResidentDetailsEdit = ({ isMutating, upsertResident }: ResidentDetailsEdit
           label="Breed *"
           placeholder="Enter the resident breed"
           {...residentForm.register('breed')}
+          defaultValue={residentData?.breed || ''}
           error={!!residentForm.formState.errors.breed}
           helperText={residentForm.formState.errors.breed?.message || ''}
         />
@@ -67,14 +76,14 @@ const ResidentDetailsEdit = ({ isMutating, upsertResident }: ResidentDetailsEdit
           control={residentForm.control}
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
-          defaultValue=""
+          defaultValue={residentData?.gender || ''}
           render={({ field }) => (
             <TextField
               {...field}
               id="gender"
               select
               label="Gender *"
-              defaultValue=""
+              defaultValue={residentData?.gender || ''}
               error={!!residentForm.formState.errors.gender}
               helperText={residentForm.formState.errors.gender?.message || ''}
               SelectProps={{
@@ -103,7 +112,7 @@ const ResidentDetailsEdit = ({ isMutating, upsertResident }: ResidentDetailsEdit
         <Controller
           name="dateOfBirth"
           control={residentForm.control}
-          defaultValue={null}
+          defaultValue={residentData?.dateOfBirth ? dayjs(residentData.dateOfBirth) : null}
           render={({ field }) => (
             <DatePickerContainer>
               <DatePicker
@@ -132,6 +141,7 @@ const ResidentDetailsEdit = ({ isMutating, upsertResident }: ResidentDetailsEdit
           multiline
           minRows={2}
           {...residentForm.register('bio')}
+          defaultValue={residentData?.bio || ''}
           error={!!residentForm.formState.errors.bio}
           helperText={residentForm.formState.errors.bio?.message || ''}
         />

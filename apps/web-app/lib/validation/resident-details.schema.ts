@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import dayjs, { type Dayjs } from 'dayjs';
 import { z } from 'zod';
 
 const validateString = (fieldName: string, isRequired = true, maxChars = 50) => {
@@ -31,7 +31,8 @@ const validateDate = (fieldName: string) =>
         .string()
         .trim()
         .datetime({ message: `Invalid ${fieldName}`, offset: true }),
-    );
+    )
+    .or(z.instanceof(dayjs as unknown as typeof Dayjs));
 
 export const createResidentSchema = z.object({
   name: validateString('Name'),

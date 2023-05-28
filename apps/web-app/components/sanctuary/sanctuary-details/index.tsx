@@ -60,7 +60,10 @@ const SanctuaryDetails = ({
         }
       />
       {editSanctuary && (
-        <form onSubmit={sanctuaryForm.handleSubmit(onSubmitSanctuaryDetailsHandler)}>
+        <form
+          autoComplete="off"
+          onSubmit={sanctuaryForm.handleSubmit(onSubmitSanctuaryDetailsHandler)}
+        >
           <CardContent
             sx={{
               '& .MuiTextField-root:not(:last-child)': { marginBottom: '40px' },

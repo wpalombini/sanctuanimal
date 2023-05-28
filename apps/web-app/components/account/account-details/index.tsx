@@ -60,7 +60,7 @@ const AccountDetails = ({
         }
       />
       {editAccount && (
-        <form onSubmit={accountForm.handleSubmit(onSubmitAccountDetailsHandler)}>
+        <form autoComplete="off" onSubmit={accountForm.handleSubmit(onSubmitAccountDetailsHandler)}>
           <CardContent
             sx={{
               '& .MuiTextField-root:not(:last-child)': { marginBottom: '40px' },
