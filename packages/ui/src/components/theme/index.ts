@@ -14,6 +14,9 @@ export const theme = createTheme({
       styleOverrides: {
         body: {
           userSelect: 'none',
+          '::-webkit-scrollbar': {
+            display: 'none',
+          },
         },
       },
     },
