@@ -41,7 +41,7 @@ const AccountPage = () => {
         setNotification(NotificationSuccess);
       },
       onError(error) {
-        console.log('onError', error);
+        console.error('onError upsertSanctuary', error);
         setNotification(NotificationError);
       },
     });
@@ -54,7 +54,7 @@ const AccountPage = () => {
         setNotification(NotificationSuccess);
       },
       onError(error) {
-        console.log('onError', error);
+        console.error(`onError updateAccount account email: ${user?.email}`, error);
         setNotification(NotificationError);
       },
     });
