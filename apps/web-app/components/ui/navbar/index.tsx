@@ -1,4 +1,4 @@
-import { AppBar, Container, Toolbar, Typography } from '@sanctuanimal/ui';
+import { AppBar, Box, Container, Toolbar, Typography } from '@sanctuanimal/ui';
 import { useRouter } from 'next/router';
 
 import { useNavBarStore } from '@/lib/stores';
@@ -18,18 +18,21 @@ export const NavBar = () => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            onClick={() => handleNavigateTo('/')}
-            sx={{
-              flexGrow: 1,
-              color: 'inherit',
-              cursor: 'pointer',
-            }}
-          >
-            SanctuAnimal
-          </Typography>
+          <Box sx={{ flexGrow: 1 }}>
+            <Typography
+              variant="h6"
+              noWrap
+              onClick={() => handleNavigateTo('/')}
+              sx={{
+                color: 'inherit',
+                cursor: 'pointer',
+                display: 'inline',
+              }}
+            >
+              SanctuAnimal
+            </Typography>
+          </Box>
+
           <AuthNav />
         </Toolbar>
       </Container>
