@@ -48,3 +48,7 @@ export const createResidentSchema = z.object({
     .optional()
     .transform(value => (value === '' ? undefined : value)),
 });
+
+export const updateResidentSchema = createResidentSchema.extend({
+  id: z.string(),
+});

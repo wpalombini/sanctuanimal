@@ -13,12 +13,14 @@ export type ResidentDetailsForm = TypeOf<typeof createResidentSchema>;
 type ResidentDetailsEditProps = {
   isMutating: boolean;
   residentData?: ResidentDetailsForm;
+  setEditResident?: (value: boolean) => void;
   upsertResident: (values: ResidentDetailsForm) => void;
 };
 
 const ResidentDetailsEdit = ({
   isMutating,
   residentData,
+  setEditResident,
   upsertResident,
 }: ResidentDetailsEditProps) => {
   const residentForm = useForm<ResidentDetailsForm>({
@@ -36,6 +38,7 @@ const ResidentDetailsEdit = ({
   const handleEditResidentCancel = () => {
     residentForm.clearErrors();
     residentForm.reset();
+    setEditResident?.(false);
   };
 
   return (

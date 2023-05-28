@@ -13,7 +13,6 @@ const NewResidentPage = () => {
   const { isLoading: createResidentIsMutating, mutate: createResident } =
     trpc.createResident.useMutation({
       onSuccess(data) {
-        console.log(data);
         setNotification(NotificationSuccess);
         replace(`/residents/${data.id}`);
       },

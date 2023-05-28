@@ -30,7 +30,7 @@ const AccountPage = () => {
   const dataIsLoading = userIsLoading || sanctuaryDataIsLoading;
 
   const invalidateGetSanctuariesForAccount = () => {
-    utils.invalidate(undefined, { queryKey: ['getSanctuariesForAccount'] });
+    utils.getSanctuariesForAccount.invalidate();
   };
 
   const { isLoading: upsertSanctuaryIsMutating, mutate: upsertSanctuary } =
