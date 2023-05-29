@@ -17,7 +17,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
       <NavigationLoadingBar />
 
       {/* Page content */}
-      <Container maxWidth="xl" sx={{ paddingTop: '20px' }}>
+      <Container maxWidth="xl" sx={{ display: 'flex', paddingTop: '20px' }}>
         {children}
       </Container>
     </>

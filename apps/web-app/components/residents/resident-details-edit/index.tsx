@@ -45,9 +45,9 @@ const ResidentDetailsEdit = ({
     <form autoComplete="off" onSubmit={residentForm.handleSubmit(onSubmitResidentDetailsHandler)}>
       <CardContent
         sx={{
-          '& .MuiFormControl-root:not(:last-child)': {
-            marginBottom: '40px',
-          },
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '40px',
         }}
       >
         <TextField

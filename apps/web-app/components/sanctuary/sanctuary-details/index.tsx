@@ -67,7 +67,9 @@ const SanctuaryDetails = ({
         >
           <CardContent
             sx={{
-              '& .MuiTextField-root:not(:last-child)': { marginBottom: '40px' },
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '40px',
             }}
           >
             <TextField
@@ -102,7 +104,7 @@ const SanctuaryDetails = ({
         </form>
       )}
       {!editSanctuary && (
-        <CardContent sx={{ '> section:not(:last-child)': { marginBottom: '20px' } }}>
+        <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           {sanctuaries?.length === 0 && (
             <Typography>Click on the pencil icon to start editing this section!</Typography>
           )}

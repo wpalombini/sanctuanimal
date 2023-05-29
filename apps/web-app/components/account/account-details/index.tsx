@@ -64,7 +64,9 @@ const AccountDetails = ({
         <form autoComplete="off" onSubmit={accountForm.handleSubmit(onSubmitAccountDetailsHandler)}>
           <CardContent
             sx={{
-              '& .MuiTextField-root:not(:last-child)': { marginBottom: '40px' },
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '40px',
             }}
           >
             <TextField
