@@ -12,6 +12,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { TypeOf } from 'zod';
 
+import DisplayField from '@/components/ui/display-field';
 import { SanctuariesOutput } from '@/lib/types';
 import { upsertSanctuarySchema } from '@/lib/validation/sanctuary-details.schema';
 
@@ -107,18 +108,8 @@ const SanctuaryDetails = ({
           )}
           {!!sanctuaries?.length && (
             <>
-              <section>
-                <Typography variant="subtitle1">Name:</Typography>
-                <Typography variant="h6" gutterBottom>
-                  {sanctuaries[0]?.name}
-                </Typography>
-              </section>
-              <section>
-                <Typography variant="subtitle1">Contact:</Typography>
-                <Typography variant="h6" gutterBottom>
-                  {sanctuaries[0]?.contact}
-                </Typography>
-              </section>
+              <DisplayField label="Name" value={sanctuaries[0]?.name} />
+              <DisplayField label="Contact" value={sanctuaries[0]?.contact} />
             </>
           )}
         </CardContent>

@@ -12,6 +12,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { TypeOf } from 'zod';
 
+import DisplayField from '@/components/ui/display-field';
 import { AccountOutput } from '@/lib/types';
 import { updateAccountSchema } from '@/lib/validation/account-details.schema';
 
@@ -94,16 +95,7 @@ const AccountDetails = ({
           {!account && (
             <Typography>Click on the pencil icon to start editing this section!</Typography>
           )}
-          {!!account && (
-            <>
-              <section>
-                <Typography variant="subtitle1">Name:</Typography>
-                <Typography variant="h6" gutterBottom>
-                  {account?.name}
-                </Typography>
-              </section>
-            </>
-          )}
+          {!!account && <DisplayField label="Name" value={account?.name} />}
         </CardContent>
       )}
     </Card>

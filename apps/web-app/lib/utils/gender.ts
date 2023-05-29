@@ -1,4 +1,4 @@
-export const getLabelForGenderValue = (value: string) => {
+export const getLabelForGenderValue = (value?: string) => {
   switch (value) {
     case 'F':
       return 'Female';

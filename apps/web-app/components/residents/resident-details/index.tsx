@@ -42,7 +42,7 @@ const ResidentDetails = ({
           upsertResident={onUpsertResident}
         />
       )}
-      {!editResident && <ResidentDetailsView />}
+      {!editResident && <ResidentDetailsView residentData={residentData} />}
     </Card>
   );
 };
