@@ -60,7 +60,11 @@ const AccountPage = () => {
     });
 
   if (dataIsLoading) {
-    return <SpinnerPage />;
+    return (
+      <PageBodyContainer>
+        <SpinnerPage />
+      </PageBodyContainer>
+    );
   }
 
   return (

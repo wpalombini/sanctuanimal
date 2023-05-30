@@ -49,7 +49,11 @@ const ResidentDetailsPage = () => {
   };
 
   if (dataIsLoading) {
-    return <SpinnerPage />;
+    return (
+      <PageBodyContainer>
+        <SpinnerPage />
+      </PageBodyContainer>
+    );
   }
 
   return (
