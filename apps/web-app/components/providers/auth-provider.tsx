@@ -74,7 +74,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (!sanctuariesData || !user) return;
 
     // If no sanctuary exists, redirect to /account to create the sanctuary
-    if (sanctuariesData.sanctuaries && sanctuariesData.sanctuaries.length === 0) {
+    if (sanctuariesData?.sanctuaries && sanctuariesData.sanctuaries.length === 0) {
       router.replace('/account');
     }
 
