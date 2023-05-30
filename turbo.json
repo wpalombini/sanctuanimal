@@ -19,6 +19,24 @@
       ],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
+    "vercel-build": {
+      "cache": false,
+      "dependsOn": ["^build"],
+      "env": [
+        "FIREBASE_SERVICE_ACCOUNT_CLIENT_EMAIL",
+        "FIREBASE_SERVICE_ACCOUNT_PRIVATE_KEY",
+        "NEXT_PUBLIC_BASE_URL",
+        "NEXT_PUBLIC_FIREBASE_API_KEY",
+        "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN",
+        "NEXT_PUBLIC_FIREBASE_PROJECT_ID",
+        "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET",
+        "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID",
+        "NEXT_PUBLIC_FIREBASE_APP_ID",
+        "NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID",
+        "NODE_ENV"
+      ],
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
+    },
     "build:watch": {
       "cache": false,
       "dependsOn": ["^build"],
