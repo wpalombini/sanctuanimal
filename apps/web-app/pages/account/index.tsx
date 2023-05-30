@@ -60,7 +60,6 @@ const AccountPage = () => {
     });
 
   if (dataIsLoading) {
-    // Change in build
     return (
       <PageBodyContainer>
         <SpinnerPage />
