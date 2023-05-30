@@ -7,6 +7,7 @@
   "scripts": {
     "clean": "shx rm -rf dist",
     "build": "pnpm clean && tsc",
+    "vercel-build": "pnpm clean && tsc",
     "build:watch": "tsc --watch",
     "dev": "pnpm build:watch",
     "lint": "eslint \"**/*.ts*\""
