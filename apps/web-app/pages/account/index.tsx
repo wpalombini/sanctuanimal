@@ -21,13 +21,16 @@ const AccountPage = () => {
 
   const utils = trpc.useContext();
 
-  const { data: sanctuariesData, isLoading: sanctuaryDataIsLoading } =
-    trpc.getSanctuariesForAccount.useQuery(undefined, {
-      enabled: !!user,
-      staleTime: Infinity,
-    });
+  const {
+    data: sanctuariesData,
+    isLoading: sanctuaryDataIsLoading,
+    isRefetching: sanctuaryDataIsRefetching,
+  } = trpc.getSanctuariesForAccount.useQuery(undefined, {
+    enabled: !!user,
+    staleTime: Infinity,
+  });
 
-  const dataIsLoading = userIsLoading || sanctuaryDataIsLoading;
+  const dataIsLoading = userIsLoading || sanctuaryDataIsLoading || sanctuaryDataIsRefetching;
 
   const invalidateGetSanctuariesForAccount = () => {
     utils.getSanctuariesForAccount.invalidate();
