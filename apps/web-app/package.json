@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "shx rm -rf .next && next build",
+    "vercel-build": "cp -R ../../packages/orm/prisma/ ./prisma && cp ./.env ./prisma && prisma generate && prisma migrate deploy && pnpm build",
     "start": "next start",
     "lint": "next lint"
   },
