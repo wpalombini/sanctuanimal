@@ -1,7 +1,7 @@
 import { CardContent } from '@sanctuanimal/ui';
 
 import DisplayField from '@/components/ui/display-field';
-import { getFormattedDate, getLabelForGenderValue } from '@/lib/utils';
+import { getLabelForGenderValue } from '@/lib/utils';
 
 import { ResidentDetailsForm } from '../resident-details-edit';
 
@@ -16,7 +16,7 @@ const ResidentDetailsView = ({ residentData }: ResidentDetailsViewProps) => {
       <DisplayField label="Species" value={residentData?.species} />
       <DisplayField label="Breed" value={residentData?.breed} />
       <DisplayField label="Gender" value={getLabelForGenderValue(residentData?.gender)} />
-      <DisplayField label="DOB" value={getFormattedDate(residentData?.dateOfBirth)} />
+      <DisplayField label="DOB" value={residentData?.dateOfBirth as string} />
       <DisplayField label="Bio" value={residentData?.bio} />
     </CardContent>
   );

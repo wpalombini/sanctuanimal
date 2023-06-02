@@ -19,7 +19,10 @@ const ResidentDetails = ({
   upsertResident,
 }: ResidentDetailsProps) => {
   const onUpsertResident = (formData: ResidentDetailsForm) => {
-    upsertResident(formData);
+    upsertResident({
+      ...formData,
+      dateOfBirth: formData.dateOfBirth as string,
+    });
   };
 
   return (

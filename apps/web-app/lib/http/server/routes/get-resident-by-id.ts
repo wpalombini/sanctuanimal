@@ -1,6 +1,8 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
+import { prisma } from '@/lib/prisma';
+
 import { protectedProcedure } from '../trpc';
 
 export const getResidentById = () => {
@@ -9,14 +11,25 @@ export const getResidentById = () => {
 
     if (!authUSer.email) throw new TRPCError({ code: 'PRECONDITION_FAILED' });
 
-    return {
-      bio: 'My lovely Alice bio',
-      breed: 'Greyhound',
-      dateOfBirth: '2017-01-01T00:00:00+10:00',
-      gender: 'F',
-      id: '123',
-      name: 'Alice',
-      species: 'Dog',
-    };
+    try {
+      const animal = await prisma.animal.findFirst({
+        where: {
+          sanctuary: {
+            user: {
+              externalId: authUSer.uid,
+            },
+          },
+          id: opts.input.id,
+          deletedAt: null,
+        },
+      });
+
+      return {
+        ...animal,
+      };
+    } catch (error) {
+      console.error(`Error getResidentById for account ${authUSer.email}`, error);
+      throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'An error occurred' });
+    }
   });
 };

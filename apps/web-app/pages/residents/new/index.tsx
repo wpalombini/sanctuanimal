@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 
 import ResidentDetails from '@/components/residents/resident-details';
+import { ResidentDetailsForm } from '@/components/residents/resident-details-edit';
 import PageBodyContainer from '@/components/ui/page-body-container';
 import { trpc } from '@/lib/http/client/trpc';
 import { useNotificationStore } from '@/lib/stores';
@@ -22,12 +23,19 @@ const NewResidentPage = () => {
       },
     });
 
+  const onCreateResident = (formData: ResidentDetailsForm) => {
+    createResident({
+      ...formData,
+      dateOfBirth: formData.dateOfBirth ? (formData.dateOfBirth as string) : null,
+    });
+  };
+
   return (
     <PageBodyContainer>
       <ResidentDetails
         editResident={true}
         isMutating={createResidentIsMutating}
-        upsertResident={createResident}
+        upsertResident={onCreateResident}
       />
     </PageBodyContainer>
   );

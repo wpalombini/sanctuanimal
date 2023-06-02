@@ -1,26 +1,42 @@
 import { TRPCError } from '@trpc/server';
 
-import { createResidentSchema } from '@/lib/validation/resident-details.schema';
+import { prisma } from '@/lib/prisma';
+import { serverCreateResidentSchema } from '@/lib/validation/resident-details.schema';
 
 import { protectedProcedure } from '../trpc';
 
 export const createResident = () => {
-  return protectedProcedure.input(createResidentSchema).mutation(async opts => {
+  return protectedProcedure.input(serverCreateResidentSchema).mutation(async opts => {
     const { user: authUSer } = opts.ctx;
+    const input = opts.input;
 
     if (!authUSer.email) throw new TRPCError({ code: 'PRECONDITION_FAILED' });
 
     try {
-      // const updatedUser = await prisma.user.update({
-      //   where: { email: authUSer.email },
-      //   data: { name },
-      // });
+      const sanctuaries = await prisma.sanctuary.findMany({
+        where: {
+          user: { externalId: authUSer.uid },
+        },
+      });
 
-      // return { user: updatedUser };
+      if (!sanctuaries?.length) {
+        throw new Error(`Sanctuary not found for account ${authUSer.email}`);
+      }
+
+      const animal = await prisma.animal.create({
+        data: {
+          name: input.name,
+          species: input.species,
+          breed: input.breed,
+          gender: input.gender,
+          dateOfBirth: input.dateOfBirth || undefined,
+          bio: input.bio || undefined,
+          sanctuaryId: sanctuaries[0].id,
+        },
+      });
 
       return {
-        ...opts.input,
-        id: '123',
+        ...animal,
       };
     } catch (error) {
       console.error(`Error upserting resident for account ${authUSer.email}`, error);

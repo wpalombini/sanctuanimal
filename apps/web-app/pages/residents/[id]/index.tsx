@@ -28,8 +28,8 @@ const ResidentDetailsPage = () => {
 
   const { isLoading: updateResidentIsMutating, mutate: updateResident } =
     trpc.updateResident.useMutation({
-      onSuccess(data) {
-        utils.getResidentById.invalidate({ id: data.id });
+      onSuccess() {
+        utils.getResidentById.invalidate();
         setNotification(NotificationSuccess);
         setEditResident(false);
       },
@@ -44,6 +44,7 @@ const ResidentDetailsPage = () => {
   const onUpdateResident = (formData: ResidentDetailsForm) => {
     updateResident({
       ...formData,
+      dateOfBirth: formData.dateOfBirth ? (formData.dateOfBirth as string) : null,
       id: residentData?.id as string,
     });
   };

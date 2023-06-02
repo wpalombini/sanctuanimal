@@ -1,14 +1,14 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, CardContent, DatePicker, InputBase, MenuItem, TextField } from '@sanctuanimal/ui';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { Controller, useForm } from 'react-hook-form';
 import { TypeOf } from 'zod';
 
 import DatePickerContainer, { DatePickerActionBar } from '@/components/ui/date-picker-container';
-import { getLabelForGenderValue } from '@/lib/utils';
-import { createResidentSchema } from '@/lib/validation/resident-details.schema';
+import { DATE_FORMAT, getFormattedDate, getLabelForGenderValue } from '@/lib/utils';
+import { clientCreateResidentSchema } from '@/lib/validation/resident-details.schema';
 
-export type ResidentDetailsForm = TypeOf<typeof createResidentSchema>;
+export type ResidentDetailsForm = TypeOf<typeof clientCreateResidentSchema>;
 
 type ResidentDetailsEditProps = {
   isMutating: boolean;
@@ -25,13 +25,13 @@ const ResidentDetailsEdit = ({
 }: ResidentDetailsEditProps) => {
   const residentForm = useForm<ResidentDetailsForm>({
     mode: 'onChange',
-    resolver: zodResolver(createResidentSchema),
+    resolver: zodResolver(clientCreateResidentSchema),
   });
 
   const onSubmitResidentDetailsHandler = (values: ResidentDetailsForm) => {
     upsertResident({
       ...values,
-      dateOfBirth: values.dateOfBirth ?? undefined,
+      dateOfBirth: values.dateOfBirth ? getFormattedDate(values.dateOfBirth as Dayjs) : undefined,
     });
   };
 
@@ -115,7 +115,9 @@ const ResidentDetailsEdit = ({
         <Controller
           name="dateOfBirth"
           control={residentForm.control}
-          defaultValue={residentData?.dateOfBirth ? dayjs(residentData.dateOfBirth) : null}
+          defaultValue={
+            residentData?.dateOfBirth ? dayjs(residentData.dateOfBirth, DATE_FORMAT) : null
+          }
           render={({ field }) => (
             <DatePickerContainer>
               <DatePicker

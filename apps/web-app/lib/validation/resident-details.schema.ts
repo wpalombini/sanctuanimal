@@ -1,6 +1,8 @@
 import dayjs, { type Dayjs } from 'dayjs';
 import { z } from 'zod';
 
+import { DATE_FORMAT } from '../utils';
+
 const validateString = (fieldName: string, isRequired = true, maxChars = 50) => {
   let validation;
 
@@ -20,25 +22,10 @@ const validateString = (fieldName: string, isRequired = true, maxChars = 50) => 
   });
 };
 
-const validateDate = (fieldName: string) =>
-  z
-    .any()
-    .transform(value => {
-      return dayjs(value).format();
-    })
-    .pipe(
-      z
-        .string()
-        .trim()
-        .datetime({ message: `Invalid ${fieldName}`, offset: true }),
-    )
-    .or(z.instanceof(dayjs as unknown as typeof Dayjs));
-
-export const createResidentSchema = z.object({
+const residentSchema = z.object({
   name: validateString('Name'),
   species: validateString('Species'),
   breed: validateString('Breed'),
-  dateOfBirth: validateDate('Date of birth').nullable().optional(),
   gender: validateString('Gender', true, 1).pipe(
     z.enum(['F', 'M'], {
       errorMap: () => ({ message: 'Invalid gender' }),
@@ -49,6 +36,29 @@ export const createResidentSchema = z.object({
     .transform(value => (value === '' ? undefined : value)),
 });
 
-export const updateResidentSchema = createResidentSchema.extend({
-  id: z.string(),
+const idSchema = z.string().uuid('Invalid id');
+const dateOfBirthStringSchema = z
+  .string()
+  .refine(value => dayjs(value, DATE_FORMAT, true).isValid())
+  .nullable()
+  .optional();
+
+export const clientCreateResidentSchema = residentSchema.extend({
+  dateOfBirth: z
+    .instanceof(dayjs as unknown as typeof Dayjs, { message: 'Invalid date of birth' })
+    .nullable()
+    .optional()
+    .or(dateOfBirthStringSchema),
+});
+
+export const serverCreateResidentSchema = residentSchema.extend({
+  dateOfBirth: dateOfBirthStringSchema,
+});
+
+export const clientUpdateResidentSchema = clientCreateResidentSchema.extend({
+  id: idSchema,
+});
+
+export const serverUpdateResidentSchema = serverCreateResidentSchema.extend({
+  id: idSchema,
 });
