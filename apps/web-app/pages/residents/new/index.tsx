@@ -11,9 +11,12 @@ const NewResidentPage = () => {
   const { replace } = useRouter();
   const { setNotification } = useNotificationStore();
 
+  const utils = trpc.useContext();
+
   const { isLoading: createResidentIsMutating, mutate: createResident } =
     trpc.createResident.useMutation({
       onSuccess(data) {
+        utils.getResidents.invalidate();
         setNotification(NotificationSuccess);
         replace(`/residents/${data.id}`);
       },

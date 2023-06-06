@@ -7,12 +7,12 @@ export type DisplayFieldProps = {
 
 const DisplayField = ({ label, value }: DisplayFieldProps) => {
   return (
-    <section>
+    <div>
       <Typography variant="subtitle1">{label}:</Typography>
       <Typography variant="h6" gutterBottom>
         {value}
       </Typography>
-    </section>
+    </div>
   );
 };
 

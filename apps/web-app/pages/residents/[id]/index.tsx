@@ -30,6 +30,7 @@ const ResidentDetailsPage = () => {
     trpc.updateResident.useMutation({
       onSuccess() {
         utils.getResidentById.invalidate();
+        utils.getResidents.invalidate();
         setNotification(NotificationSuccess);
         setEditResident(false);
       },
