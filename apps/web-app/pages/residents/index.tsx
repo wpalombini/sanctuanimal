@@ -1,7 +1,9 @@
+import { Box, Link as LinkMUI } from '@sanctuanimal/ui';
 import isEmpty from 'lodash-es/isEmpty';
 import Link from 'next/link';
 
 import { useAuthContext } from '@/components/providers';
+import { ResidentItem } from '@/components/residents/resident-item';
 import { NewResidentBtnContainer } from '@/components/ui/new-resident-btn';
 import PageBodyContainer from '@/components/ui/page-body-container';
 import SpinnerPage from '@/components/ui/spinner-page';
@@ -38,9 +40,11 @@ const ResidentsPage = () => {
       {!isEmpty(sanctuariesData?.sanctuaries) && <NewResidentBtnContainer />}
 
       {residentData?.map(resident => (
-        <Link href={`/residents/${resident.id}`} key={resident.id}>
-          {resident.name}
-        </Link>
+        <Box key={resident.id}>
+          <LinkMUI href={`/residents/${resident.id}`} component={Link}>
+            <ResidentItem resident={resident} />
+          </LinkMUI>
+        </Box>
       ))}
     </PageBodyContainer>
   );
