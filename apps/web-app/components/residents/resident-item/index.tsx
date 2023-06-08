@@ -1,9 +1,9 @@
-import { Box, Card, CardContent, Typography, TypographyTypeMap } from '@sanctuanimal/ui';
+import { Box, Card, CardContent, Typography, TypographyProps } from '@sanctuanimal/ui';
 import React from 'react';
 
 import { getLabelForGenderValue } from '@/lib/utils';
 
-type ResidentItem = {
+type ResidentItemProps = {
   bio: string | null;
   breed: string;
   dateOfBirth: string | null;
@@ -18,16 +18,8 @@ const ResidentItemLabel = ({ children }: { children: React.ReactNode }) => (
   </Typography>
 );
 
-const ResidentItemValue = ({
-  children,
-  variant = 'body1',
-}: {
-  children: React.ReactNode;
-  variant?: TypographyTypeMap['props']['variant'];
-}) => (
-  <Typography variant={variant} noWrap fontWeight="500">
-    {children}
-  </Typography>
+const ResidentItemValue = (props: TypographyProps) => (
+  <Typography {...props} noWrap fontWeight="500" />
 );
 
 const ResidentItemField = ({ children }: { children: React.ReactNode }) => (
@@ -48,7 +40,7 @@ const ResidentItemFieldGroup = ({ children }: { children: React.ReactNode }) => 
   </Box>
 );
 
-export const ResidentItem = ({ resident }: { resident: ResidentItem }) => {
+export const ResidentItem = ({ resident }: { resident: ResidentItemProps }) => {
   return (
     <Card>
       <CardContent>
@@ -56,7 +48,9 @@ export const ResidentItem = ({ resident }: { resident: ResidentItem }) => {
           {/* Name */}
           <ResidentItemField>
             <ResidentItemLabel>Name:</ResidentItemLabel>
-            <ResidentItemValue variant="h6">{resident.name}</ResidentItemValue>
+            <ResidentItemValue sx={{ fontSize: '20px', lineHeight: '1.1' }}>
+              {resident.name}
+            </ResidentItemValue>
           </ResidentItemField>
 
           {/* Species */}

@@ -21,12 +21,10 @@ export const DatePickerActionBar = (props: PickersActionBarProps) => {
   );
 };
 
-const DatePickerContainer = ({ children }: { children: React.ReactNode }) => {
+export const DatePickerContainer = ({ children }: { children: React.ReactNode }) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-au">
       {children}
     </LocalizationProvider>
   );
 };
-
-export default DatePickerContainer;

@@ -2,7 +2,7 @@ import { LinearProgress } from '@sanctuanimal/ui';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
-const NavigationLoadingBar = () => {
+export const NavigationLoadingBar = () => {
   const [isNavigating, setIsNavigating] = useState(false);
   const router = useRouter();
 
@@ -30,5 +30,3 @@ const NavigationLoadingBar = () => {
     </div>
   );
 };
-
-export default NavigationLoadingBar;

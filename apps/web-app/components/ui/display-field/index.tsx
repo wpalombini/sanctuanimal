@@ -5,7 +5,7 @@ export type DisplayFieldProps = {
   value?: string;
 };
 
-const DisplayField = ({ label, value }: DisplayFieldProps) => {
+export const DisplayField = ({ label, value }: DisplayFieldProps) => {
   return (
     <div>
       <Typography variant="subtitle1">{label}:</Typography>
@@ -15,5 +15,3 @@ const DisplayField = ({ label, value }: DisplayFieldProps) => {
     </div>
   );
 };
-
-export default DisplayField;

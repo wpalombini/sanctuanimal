@@ -4,9 +4,7 @@ import Link from 'next/link';
 
 import { useAuthContext } from '@/components/providers';
 import { ResidentItem } from '@/components/residents/resident-item';
-import { NewResidentBtnContainer } from '@/components/ui/new-resident-btn';
-import PageBodyContainer from '@/components/ui/page-body-container';
-import SpinnerPage from '@/components/ui/spinner-page';
+import { NewResidentBtnContainer, PageBodyContainer, SpinnerPage } from '@/components/ui';
 import { trpc } from '@/lib/http/client/trpc';
 
 const ResidentsPage = () => {

@@ -1,6 +1,6 @@
 import { Spinner } from '@sanctuanimal/ui';
 
-const SpinnerPage = ({ color }: { color?: string }) => {
+export const SpinnerPage = ({ color }: { color?: string }) => {
   return (
     <div
       style={{
@@ -15,5 +15,3 @@ const SpinnerPage = ({ color }: { color?: string }) => {
     </div>
   );
 };
-
-export default SpinnerPage;

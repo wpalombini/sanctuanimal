@@ -4,7 +4,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import { Controller, useForm } from 'react-hook-form';
 import { TypeOf } from 'zod';
 
-import DatePickerContainer, { DatePickerActionBar } from '@/components/ui/date-picker-container';
+import { DatePickerActionBar, DatePickerContainer } from '@/components/ui';
 import { DATE_FORMAT, getFormattedDate, getLabelForGenderValue } from '@/lib/utils';
 import { clientCreateResidentSchema } from '@/lib/validation/resident-details.schema';
 

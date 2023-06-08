@@ -1,6 +1,6 @@
 import { CardContent } from '@sanctuanimal/ui';
 
-import DisplayField from '@/components/ui/display-field';
+import { DisplayField } from '@/components/ui';
 import { getLabelForGenderValue } from '@/lib/utils';
 
 import { ResidentDetailsForm } from '../resident-details-edit';

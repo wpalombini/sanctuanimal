@@ -2,7 +2,7 @@ import { Alert, Snackbar } from '@sanctuanimal/ui';
 
 import { useNotificationStore } from '@/lib/stores';
 
-const Notifications = () => {
+export const Notifications = () => {
   const { notification, setNotification } = useNotificationStore();
 
   return (
@@ -20,5 +20,3 @@ const Notifications = () => {
     </Snackbar>
   );
 };
-
-export default Notifications;

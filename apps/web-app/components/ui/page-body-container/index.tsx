@@ -1,7 +1,7 @@
 import { Container } from '@sanctuanimal/ui';
 import React from 'react';
 
-const PageBodyContainer = ({ children }: { children: React.ReactNode }) => {
+export const PageBodyContainer = ({ children }: { children: React.ReactNode }) => {
   return (
     <Container
       maxWidth={false}
@@ -17,5 +17,3 @@ const PageBodyContainer = ({ children }: { children: React.ReactNode }) => {
     </Container>
   );
 };
-
-export default PageBodyContainer;

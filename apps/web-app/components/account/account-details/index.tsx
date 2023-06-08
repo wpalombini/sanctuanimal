@@ -12,7 +12,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { TypeOf } from 'zod';
 
-import DisplayField from '@/components/ui/display-field';
+import { DisplayField } from '@/components/ui';
 import { AccountOutput } from '@/lib/types';
 import { updateAccountSchema } from '@/lib/validation/account-details.schema';
 

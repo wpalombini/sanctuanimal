@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 
 import ResidentDetails from '@/components/residents/resident-details';
 import { ResidentDetailsForm } from '@/components/residents/resident-details-edit';
-import PageBodyContainer from '@/components/ui/page-body-container';
+import { PageBodyContainer } from '@/components/ui';
 import { trpc } from '@/lib/http/client/trpc';
 import { useNotificationStore } from '@/lib/stores';
 import { NotificationError, NotificationSuccess } from '@/lib/types';
