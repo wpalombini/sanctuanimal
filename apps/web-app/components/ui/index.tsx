@@ -1,4 +1,4 @@
-export * from './auth-nav';
+export * from './auth-menu';
 export * from './date-picker-container';
 export * from './display-field';
 export * from './layout';

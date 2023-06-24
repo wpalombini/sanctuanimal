@@ -1,9 +1,10 @@
-import { AppBar, Box, Container, Toolbar, Typography } from '@sanctuanimal/ui';
+import { AppBar, Box, Container, Link as LinkMUI, Toolbar, Typography } from '@sanctuanimal/ui';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { useNavBarStore } from '@/lib/stores';
 
-import { AuthNav } from '../auth-nav';
+import { AuthMenu } from '../auth-menu';
 
 export const NavBar = () => {
   const router = useRouter();
@@ -31,9 +32,15 @@ export const NavBar = () => {
             >
               SanctuAnimal
             </Typography>
+            <LinkMUI color="inherit" href="/residents" component={Link}>
+              Residents
+            </LinkMUI>
+            <LinkMUI color="inherit" href="/account" component={Link}>
+              Account
+            </LinkMUI>
           </Box>
 
-          <AuthNav />
+          <AuthMenu />
         </Toolbar>
       </Container>
     </AppBar>

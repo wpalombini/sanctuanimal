@@ -15,7 +15,7 @@ import { useAuthContext } from '@/components/providers';
 import { trpc } from '@/lib/http/client/trpc';
 import { useNavBarStore } from '@/lib/stores';
 
-export const AuthNav = () => {
+export const AuthMenu = () => {
   const router = useRouter();
   const { anchorElUser, setAnchorElUser } = useNavBarStore();
   const { loginWithGoogle, logout, loading, user } = useAuthContext();
