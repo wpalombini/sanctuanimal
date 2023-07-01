@@ -1,13 +1,18 @@
-import { Box, Link as LinkMUI } from '@sanctuanimal/ui';
+import { Box, Card, CardContent, Link as LinkMUI, TextField } from '@sanctuanimal/ui';
 import isEmpty from 'lodash-es/isEmpty';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect, useRef, useState } from 'react';
 
 import { useAuthContext } from '@/components/providers';
 import { ResidentItem } from '@/components/residents/resident-item';
 import { NewResidentBtnContainer, PageBodyContainer, SpinnerPage } from '@/components/ui';
 import { trpc } from '@/lib/http/client/trpc';
+import { onEnter } from '@/lib/utils';
 
 const ResidentsPage = () => {
+  const { query, pathname, push } = useRouter();
+
   const { user, loading: userIsLoading } = useAuthContext();
 
   const { data: sanctuariesData } = trpc.getSanctuariesForAccount.useQuery(undefined, {
@@ -15,7 +20,7 @@ const ResidentsPage = () => {
     staleTime: Infinity,
   });
 
-  const { data: residentData, isLoading: residentDataIsLoading } = trpc.getResidents.useQuery(
+  const { data: residents, isLoading: residentDataIsLoading } = trpc.getResidents.useQuery(
     undefined,
     {
       enabled: !!user,
@@ -24,6 +29,54 @@ const ResidentsPage = () => {
   );
 
   const dataIsLoading = userIsLoading || residentDataIsLoading;
+
+  const searchFieldRef = useRef<HTMLInputElement>(null);
+
+  const [filteredResidents, setFilteredResidents] = useState<typeof residents>();
+
+  const getSearchValue = () => searchFieldRef.current?.value?.trim();
+
+  const applyFilter = () => {
+    if (!residents?.length) return;
+    const q = getSearchValue()?.toLowerCase();
+
+    if (!q) {
+      resetFilter();
+      return;
+    }
+
+    setFilteredResidents(
+      residents.filter(
+        resident =>
+          resident.name.toLocaleLowerCase().includes(q) ||
+          resident.species.toLocaleLowerCase().includes(q) ||
+          resident.breed.toLocaleLowerCase().includes(q),
+      ),
+    );
+  };
+
+  const resetFilter = () => {
+    setFilteredResidents(residents?.length ? [...residents] : []);
+  };
+
+  // copy the residents array after loading the residents
+  useEffect(() => {
+    if (getSearchValue()) {
+      applyFilter();
+    } else {
+      resetFilter();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [residents, query]);
+
+  const handleSearch = () => {
+    const query = getSearchValue();
+
+    push({
+      pathname,
+      query: query ? { q: query } : undefined,
+    });
+  };
 
   if (dataIsLoading) {
     return (
@@ -37,7 +90,18 @@ const ResidentsPage = () => {
     <PageBodyContainer>
       {!isEmpty(sanctuariesData?.sanctuaries) && <NewResidentBtnContainer />}
 
-      {residentData?.map(resident => (
+      <Card>
+        <CardContent>
+          <TextField
+            defaultValue={query['q']}
+            inputRef={searchFieldRef}
+            placeholder="Search by name, species or breed"
+            onKeyDown={event => onEnter(event, handleSearch)}
+          />
+        </CardContent>
+      </Card>
+
+      {filteredResidents?.map(resident => (
         <Box key={resident.id}>
           <LinkMUI href={`/residents/${resident.id}`} component={Link}>
             <ResidentItem resident={resident} />
