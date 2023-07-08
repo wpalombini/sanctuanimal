@@ -23,6 +23,14 @@ export const getResidents = () => {
         orderBy: {
           updatedAt: 'desc',
         },
+        select: {
+          id: true,
+          name: true,
+          species: true,
+          breed: true,
+          gender: true,
+          dateOfBirth: true,
+        },
       });
     } catch (error) {
       console.error(`Error getResidentById for account ${authUSer.email}`, error);

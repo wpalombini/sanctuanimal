@@ -4,7 +4,6 @@ import React from 'react';
 import { getLabelForGenderValue } from '@/lib/utils';
 
 type ResidentItemProps = {
-  bio: string | null;
   breed: string;
   dateOfBirth: string | null;
   gender: string;

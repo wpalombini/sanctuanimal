@@ -17,6 +17,7 @@ export * from './components/menu';
 export * from './components/menu-item';
 export * from './components/snackbar';
 export * from './components/spinner';
+export * from './components/tabs';
 export * from './components/text-field';
 export * from './components/theme/provider';
 export * from './components/toolbar';
