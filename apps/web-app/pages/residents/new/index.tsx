@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 
 import ResidentDetails from '@/components/residents/resident-details';
-import { ResidentDetailsForm } from '@/components/residents/resident-details-edit';
+import { ResidentDetailsForm } from '@/components/residents/resident-details/resident-details-edit';
 import { PageBodyContainer } from '@/components/ui';
 import { trpc } from '@/lib/http/client/trpc';
 import { useNotificationStore } from '@/lib/stores';

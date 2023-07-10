@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import { useAuthContext } from '@/components/providers';
 import ResidentDetails from '@/components/residents/resident-details';
-import { ResidentDetailsForm } from '@/components/residents/resident-details-edit';
+import { ResidentDetailsForm } from '@/components/residents/resident-details/resident-details-edit';
 import { ResidentNotes } from '@/components/residents/resident-notes';
 import { PageBodyContainer, SpinnerPage } from '@/components/ui';
 import { trpc } from '@/lib/http/client/trpc';

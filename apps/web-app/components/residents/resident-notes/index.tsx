@@ -1,6 +1,9 @@
 import { Card, CardContent, CardHeader, Tab, Tabs } from '@sanctuanimal/ui';
 import { SyntheticEvent, useState } from 'react';
 
+import { ResidentDetailsGeneralNotes } from './general-notes';
+import { ResidentDetailsHistoricalNotes } from './historical-notes';
+
 const GENERAL = 'general';
 const HISTORICAL = 'historical';
 
@@ -10,6 +13,7 @@ export const ResidentNotes = () => {
   const handleTabChange = (event: SyntheticEvent, newValue: string) => {
     setActiveTab(newValue);
   };
+
   return (
     <Card>
       <CardHeader title="Resident notes" />
@@ -19,8 +23,10 @@ export const ResidentNotes = () => {
           <Tab value={HISTORICAL} label="Historical" />
         </Tabs>
 
-        {activeTab === GENERAL && <span>General Notes</span>}
-        {activeTab === HISTORICAL && <span>Historical Notes</span>}
+        {activeTab === GENERAL && (
+          <ResidentDetailsGeneralNotes generalNotes="The general notes to be displayed" />
+        )}
+        {activeTab === HISTORICAL && <ResidentDetailsHistoricalNotes />}
       </CardContent>
     </Card>
   );

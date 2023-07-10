@@ -1,7 +1,7 @@
 import { Card, CardHeader, CreateIcon, IconButton } from '@sanctuanimal/ui';
 
-import ResidentDetailsEdit, { ResidentDetailsForm } from '../resident-details-edit';
-import ResidentDetailsView from '../resident-details-view';
+import ResidentDetailsEdit, { ResidentDetailsForm } from './resident-details-edit';
+import ResidentDetailsView from './resident-details-view';
 
 export type ResidentDetailsProps = {
   editResident: boolean;
