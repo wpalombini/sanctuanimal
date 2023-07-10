@@ -44,11 +44,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const logout = async () => {
     queryClient.removeQueries();
 
-    try {
-      return await rawLogout();
-    } finally {
-      router.replace('/');
-    }
+    router.replace('/');
+    rawLogout();
   };
 
   useEffect(() => {
