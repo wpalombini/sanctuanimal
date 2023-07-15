@@ -5,6 +5,7 @@ import {
   getSanctuariesForAccount,
   updateAccount,
   updateResident,
+  updateResidentGeneralNotes,
   upsertSanctuary,
 } from './routes';
 import { router } from './trpc';
@@ -22,6 +23,7 @@ export const appRouter = router({
   getResidents: getResidents(),
   getResidentById: getResidentById(),
   updateResident: updateResident(),
+  updateResidentGeneralNotes: updateResidentGeneralNotes(),
 });
 
 export type AppRouter = typeof appRouter;

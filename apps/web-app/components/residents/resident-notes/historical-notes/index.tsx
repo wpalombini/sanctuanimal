@@ -5,7 +5,7 @@ export const ResidentDetailsHistoricalNotes = () => {
     <Card elevation={0}>
       <CardHeader title="Historical notes" />
       <CardContent>
-        <span>Historical notes</span>
+        <span>Historical notes coming soon</span>
       </CardContent>
     </Card>
   );

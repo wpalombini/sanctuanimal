@@ -28,8 +28,8 @@ const ResidentDetailsPage = () => {
 
   const { isLoading: updateResidentIsMutating, mutate: updateResident } =
     trpc.updateResident.useMutation({
-      onSuccess() {
-        utils.getResidentById.invalidate();
+      onSuccess(data, variables) {
+        utils.getResidentById.invalidate({ id: variables.id });
         utils.getResidents.invalidate();
         setNotification(NotificationSuccess);
         setEditResident(false);

@@ -3,17 +3,34 @@ import { Button, CardContent, TextField } from '@sanctuanimal/ui';
 import { useForm } from 'react-hook-form';
 import { TypeOf } from 'zod';
 
-import { useResidentNotesStore } from '@/lib/stores';
-import { updateGeneralNotesSchema } from '@/lib/validation/resident-general-notes.schema';
+import { trpc } from '@/lib/http/client/trpc';
+import { useNotificationStore, useResidentNotesStore } from '@/lib/stores';
+import { NotificationError, NotificationSuccess } from '@/lib/types';
+import {
+  serverUpdateGeneralNotesSchema,
+  updateGeneralNotesSchema,
+} from '@/lib/validation/resident-general-notes.schema';
 
 type GeneralNotesForm = TypeOf<typeof updateGeneralNotesSchema>;
-
-type GeneralNotesEditProps = {
-  generalNotes: string;
-};
-
-export const GeneralNotesEdit = ({ generalNotes }: GeneralNotesEditProps) => {
+export type GeneralNotesProps = { residentData: TypeOf<typeof serverUpdateGeneralNotesSchema> };
+export const GeneralNotesEdit = ({ residentData }: GeneralNotesProps) => {
   const { setEditGeneralNotes } = useResidentNotesStore();
+  const { setNotification } = useNotificationStore();
+
+  const utils = trpc.useContext();
+
+  const { isLoading: updateResidentGeneralNotesIsMutating, mutate: updateGeneralNotes } =
+    trpc.updateResidentGeneralNotes.useMutation({
+      onSuccess(data, variables) {
+        utils.getResidentById.invalidate({ id: variables.id });
+        setNotification(NotificationSuccess);
+        setEditGeneralNotes(false);
+      },
+      onError(error) {
+        console.error(`onError updateResidentGeneralNotes resident.id: ${residentData?.id}`, error);
+        setNotification(NotificationError);
+      },
+    });
 
   const noteForm = useForm<GeneralNotesForm>({
     mode: 'onChange',
@@ -26,8 +43,11 @@ export const GeneralNotesEdit = ({ generalNotes }: GeneralNotesEditProps) => {
     setEditGeneralNotes?.(false);
   };
 
-  const onSubmitGeneralNotesHandler = (values: GeneralNotesForm) => {
-    console.log(values);
+  const onSubmitGeneralNotesHandler = (formData: GeneralNotesForm) => {
+    updateGeneralNotes({
+      ...formData,
+      id: residentData.id as string,
+    });
   };
 
   return (
@@ -39,7 +59,7 @@ export const GeneralNotesEdit = ({ generalNotes }: GeneralNotesEditProps) => {
           multiline
           minRows={5}
           {...noteForm.register('generalNotes')}
-          defaultValue={generalNotes || ''}
+          defaultValue={residentData?.generalNotes || ''}
           error={!!noteForm.formState.errors.generalNotes}
           helperText={noteForm.formState.errors.generalNotes?.message || ''}
         />
@@ -52,7 +72,9 @@ export const GeneralNotesEdit = ({ generalNotes }: GeneralNotesEditProps) => {
         >
           Cancel
         </Button>
-        <Button type="submit">Save</Button>
+        <Button type="submit" disabled={updateResidentGeneralNotesIsMutating}>
+          Save
+        </Button>
       </CardContent>
     </form>
   );

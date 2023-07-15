@@ -23,9 +23,7 @@ export const ResidentNotes = () => {
           <Tab value={HISTORICAL} label="Historical" />
         </Tabs>
 
-        {activeTab === GENERAL && (
-          <ResidentDetailsGeneralNotes generalNotes="The general notes to be displayed" />
-        )}
+        {activeTab === GENERAL && <ResidentDetailsGeneralNotes />}
         {activeTab === HISTORICAL && <ResidentDetailsHistoricalNotes />}
       </CardContent>
     </Card>
