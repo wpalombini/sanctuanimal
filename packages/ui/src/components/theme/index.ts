@@ -48,5 +48,10 @@ export const theme = createTheme({
         variant: 'outlined',
       },
     },
+    MuiTab: {
+      defaultProps: {
+        disableRipple: true,
+      },
+    },
   },
 });
