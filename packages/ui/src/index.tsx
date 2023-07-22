@@ -9,6 +9,7 @@ export * from './components/date-picker';
 export * from './components/dialog';
 export * from './components/icon-button';
 export * from './components/icons/account-circle';
+export * from './components/icons/add';
 export * from './components/icons/create';
 export * from './components/input-base';
 export * from './components/linear-progress';
