@@ -3,6 +3,7 @@
   "globalDependencies": ["**/.env.*local"],
   "pipeline": {
     "build": {
+      "cache": false,
       "dependsOn": ["^build"],
       "env": [
         "FIREBASE_SERVICE_ACCOUNT_CLIENT_EMAIL",
