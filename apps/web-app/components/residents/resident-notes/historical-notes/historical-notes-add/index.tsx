@@ -25,8 +25,8 @@ export const HistoricalNotesAdd = () => {
     isLoading: createResidentHistoricalNoteIsMutating,
     mutate: createResidentHistoricalNote,
   } = trpc.createResidentHistoricalNote.useMutation({
-    onSuccess() {
-      utils.getResidentHistoricalNotes.invalidate();
+    onSuccess(data, variables) {
+      utils.getResidentHistoricalNotes.invalidate({ residentId: variables.residentId });
       setNotification(NotificationSuccess);
       setAddHistoricalNote(false);
     },

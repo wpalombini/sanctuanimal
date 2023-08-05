@@ -22,6 +22,7 @@ export const getResidentHistoricalNotes = () => {
             },
           },
           deletedAt: null,
+          animalId: opts?.input?.residentId,
         },
         orderBy: {
           updatedAt: 'desc',
