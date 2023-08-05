@@ -1,6 +1,8 @@
 import {
   createResident,
+  createResidentHistoricalNote,
   getResidentById,
+  getResidentHistoricalNotes,
   getResidents,
   getSanctuariesForAccount,
   updateAccount,
@@ -23,6 +25,10 @@ export const appRouter = router({
   getResidents: getResidents(),
   getResidentById: getResidentById(),
   updateResident: updateResident(),
+
+  // Resident notes
+  createResidentHistoricalNote: createResidentHistoricalNote(),
+  getResidentHistoricalNotes: getResidentHistoricalNotes(),
   updateResidentGeneralNotes: updateResidentGeneralNotes(),
 });
 

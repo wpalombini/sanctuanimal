@@ -32,7 +32,7 @@ export const updateResidentGeneralNotes = () => {
       };
     } catch (error) {
       console.error(
-        `Error general notes for resident id: ${opts.input.id} for account ${authUSer.email}`,
+        `Error saving general notes for resident id: ${opts?.input?.id} for account ${authUSer.email}`,
         error,
       );
       throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'An error occurred' });

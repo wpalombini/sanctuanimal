@@ -33,7 +33,7 @@ export const getResidents = () => {
         },
       });
     } catch (error) {
-      console.error(`Error getResidentById for account ${authUSer.email}`, error);
+      console.error(`Error getResidents for account ${authUSer.email}`, error);
       throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'An error occurred' });
     }
   });
