@@ -13,28 +13,19 @@ export const createResidentHistoricalNote = () => {
     if (!authUSer.email) throw new TRPCError({ code: 'PRECONDITION_FAILED' });
 
     try {
-      // const updatedAnimal = await prisma.animal.updateMany({
-      //   where: {
-      //     id: input.id,
-      //     sanctuary: {
-      //       user: {
-      //         externalId: authUSer.uid,
-      //       },
-      //     },
-      //   },
-      //   data: {
-      //     historicalNote: input.historicalNote,
-      //   },
-      // });
-      console.log('INPUT:', input);
+      const historicalNote = await prisma.historicalNotes.create({
+        data: {
+          historicalNote: input.historicalNote,
+          historicalNoteType: input.historicalNoteType,
+          animalId: input.residentId,
+        },
+      });
       return {
-        id: '1',
-        historicalNote: input.historicalNote,
-        historicalNoteType: input.historicalNoteType,
+        ...historicalNote,
       };
     } catch (error) {
       console.error(
-        `Error saving historical note for resident id: ${opts.input.residentId} for account ${authUSer.email}`,
+        `Error saving historical note for resident id: ${opts?.input?.residentId} for account ${authUSer.email}`,
         error,
       );
       throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'An error occurred' });

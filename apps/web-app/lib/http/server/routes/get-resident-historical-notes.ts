@@ -12,39 +12,27 @@ export const getResidentHistoricalNotes = () => {
     if (!authUSer.email) throw new TRPCError({ code: 'PRECONDITION_FAILED' });
 
     try {
-      return [
-        {
-          historicalNote: 'My historical note 1',
-          historicalNoteType: 'G',
-          id: '1',
+      return await prisma.historicalNotes.findMany({
+        where: {
+          animal: {
+            sanctuary: {
+              user: {
+                externalId: authUSer.uid,
+              },
+            },
+          },
+          deletedAt: null,
         },
-        {
-          historicalNote: 'My historical note 2',
-          historicalNoteType: 'M',
-          id: '2',
+        orderBy: {
+          updatedAt: 'desc',
         },
-      ];
-      // return await prisma.animal.findMany({
-      //   where: {
-      //     sanctuary: {
-      //       user: {
-      //         externalId: authUSer.uid,
-      //       },
-      //     },
-      //     deletedAt: null,
-      //   },
-      //   orderBy: {
-      //     updatedAt: 'desc',
-      //   },
-      //   select: {
-      //     id: true,
-      //     name: true,
-      //     species: true,
-      //     breed: true,
-      //     gender: true,
-      //     dateOfBirth: true,
-      //   },
-      // });
+        select: {
+          id: true,
+          historicalNote: true,
+          historicalNoteType: true,
+          createdAt: true,
+        },
+      });
     } catch (error) {
       console.error(
         `Error getResidentHistoricalNotes for residentId ${opts?.input?.residentId} for account ${authUSer.email}`,

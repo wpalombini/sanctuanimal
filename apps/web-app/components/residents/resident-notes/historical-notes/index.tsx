@@ -41,8 +41,11 @@ export const ResidentDetailsHistoricalNotes = () => {
           </Box>
         )}
         {!residentHistoricalNotesIsLoading &&
-          !!residentHistoricalNotes?.length &&
-          residentHistoricalNotes.map(note => <div key={note.id}>{note.historicalNote}</div>)}
+          (residentHistoricalNotes?.length ? (
+            residentHistoricalNotes.map(note => <div key={note.id}>{note.historicalNote}</div>)
+          ) : (
+            <span>Click on the plus icon to add your first historical note!</span>
+          ))}
       </CardContent>
     </Card>
   );
