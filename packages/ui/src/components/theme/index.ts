@@ -46,6 +46,7 @@ export const theme = createTheme({
         },
         fullWidth: true,
         variant: 'outlined',
+        size: 'small',
       },
     },
     MuiTab: {
