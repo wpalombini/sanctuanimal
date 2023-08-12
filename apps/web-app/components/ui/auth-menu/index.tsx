@@ -69,7 +69,7 @@ export const AuthMenu = () => {
             <AccountCircle />
           </IconButton>
           <Menu
-            sx={{ mt: '45px' }}
+            sx={{ mt: 6 }}
             id="menu-appbar"
             anchorEl={anchorElUser}
             anchorOrigin={{

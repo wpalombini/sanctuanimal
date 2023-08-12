@@ -69,7 +69,7 @@ const SanctuaryDetails = ({
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              gap: '40px',
+              gap: 4,
             }}
           >
             <TextField
@@ -93,7 +93,7 @@ const SanctuaryDetails = ({
             <Button
               onClick={() => handleEditSanctuaryCancel()}
               color="secondary"
-              sx={{ marginRight: '5px' }}
+              sx={{ marginRight: 1 }}
             >
               Cancel
             </Button>
@@ -104,7 +104,7 @@ const SanctuaryDetails = ({
         </form>
       )}
       {!editSanctuary && (
-        <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
           {sanctuaries?.length === 0 && (
             <Typography>Click on the pencil icon to start editing this section!</Typography>
           )}

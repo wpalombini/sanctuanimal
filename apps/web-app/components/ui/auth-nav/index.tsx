@@ -7,9 +7,7 @@ export const AuthNav = () => {
   const { user } = useAuthContext();
 
   return (
-    <Box
-      sx={{ flexGrow: 1, '& > a': { paddingLeft: '10px', display: { xs: 'none', sm: 'inline' } } }}
-    >
+    <Box sx={{ flexGrow: 1, '& > a': { paddingLeft: 2, display: { xs: 'none', sm: 'inline' } } }}>
       {!!user && (
         <>
           <LinkMUI color="inherit" href="/residents" component={Link}>

@@ -11,7 +11,7 @@ type ResidentDetailsViewProps = {
 
 const ResidentDetailsView = ({ residentData }: ResidentDetailsViewProps) => {
   return (
-    <CardContent>
+    <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
       <DisplayField label="Name" value={residentData?.name} />
       <DisplayField label="Species" value={residentData?.species} />
       <DisplayField label="Breed" value={residentData?.breed} />

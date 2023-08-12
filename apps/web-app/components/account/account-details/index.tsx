@@ -66,7 +66,6 @@ const AccountDetails = ({
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              gap: '40px',
             }}
           >
             <TextField
@@ -82,7 +81,7 @@ const AccountDetails = ({
             <Button
               onClick={() => handleEditAccountCancel()}
               color="secondary"
-              sx={{ marginRight: '5px' }}
+              sx={{ marginRight: 1 }}
             >
               Cancel
             </Button>

@@ -1,7 +1,7 @@
 import { createTheme } from '@mui/material';
 import { blue, deepOrange, grey } from '@mui/material/colors';
 
-export const theme = createTheme({
+const defaultTheme = createTheme({
   palette: {
     primary: blue,
     secondary: deepOrange,
@@ -9,6 +9,9 @@ export const theme = createTheme({
       default: grey[200],
     },
   },
+});
+
+export const theme = createTheme(defaultTheme, {
   components: {
     MuiCssBaseline: {
       styleOverrides: {
@@ -36,6 +39,15 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           borderBottom: `solid 1px ${grey[300]}`,
+        },
+      },
+    },
+    MuiCardContent: {
+      styleOverrides: {
+        root: {
+          '&:last-child': {
+            paddingBottom: defaultTheme.spacing(2),
+          },
         },
       },
     },

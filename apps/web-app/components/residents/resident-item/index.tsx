@@ -22,7 +22,7 @@ const ResidentItemValue = (props: TypographyProps) => (
 );
 
 const ResidentItemField = ({ children }: { children: React.ReactNode }) => (
-  <Box sx={{ paddingX: '5px', width: { xs: '100%', sm: '110px', md: '170px', xl: '200px' } }}>
+  <Box sx={{ paddingX: 1, width: { xs: '100%', sm: '110px', md: '170px', xl: '200px' } }}>
     {children}
   </Box>
 );

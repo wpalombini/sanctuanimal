@@ -47,7 +47,7 @@ const ResidentDetailsEdit = ({
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          gap: '40px',
+          gap: 4,
         }}
       >
         <TextField
@@ -155,7 +155,7 @@ const ResidentDetailsEdit = ({
         <Button
           onClick={() => handleEditResidentCancel()}
           color="secondary"
-          sx={{ marginRight: '5px' }}
+          sx={{ marginRight: 1 }}
         >
           Cancel
         </Button>

@@ -60,7 +60,7 @@ export const HistoricalNotesAdd = () => {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          gap: '40px',
+          gap: 4,
         }}
       >
         <TextField
@@ -93,7 +93,7 @@ export const HistoricalNotesAdd = () => {
         />
       </CardContent>
       <CardContent sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <Button onClick={() => handleAddNoteCancel()} color="secondary" sx={{ marginRight: '5px' }}>
+        <Button onClick={() => handleAddNoteCancel()} color="secondary" sx={{ marginRight: 1 }}>
           Cancel
         </Button>
         <Button type="submit" disabled={createResidentHistoricalNoteIsMutating}>

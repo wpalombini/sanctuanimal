@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { trpc } from '@/lib/http/client/trpc';
 import { useResidentNotesStore } from '@/lib/stores';
 
+import { HistoricalNoteItem } from './historical-note-item';
 import { HistoricalNotesAdd } from './historical-notes-add';
 
 export const ResidentDetailsHistoricalNotes = () => {
@@ -42,7 +43,11 @@ export const ResidentDetailsHistoricalNotes = () => {
         )}
         {!residentHistoricalNotesIsLoading &&
           (residentHistoricalNotes?.length ? (
-            residentHistoricalNotes.map(note => <div key={note.id}>{note.historicalNote}</div>)
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              {residentHistoricalNotes.map(note => (
+                <HistoricalNoteItem key={note.id} note={note} />
+              ))}
+            </Box>
           ) : (
             <span>Click on the plus icon to add your first historical note!</span>
           ))}

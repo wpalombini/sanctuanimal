@@ -65,11 +65,7 @@ export const GeneralNotesEdit = ({ residentData }: GeneralNotesProps) => {
         />
       </CardContent>
       <CardContent sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <Button
-          onClick={() => handleEditNotesCancel()}
-          color="secondary"
-          sx={{ marginRight: '5px' }}
-        >
+        <Button onClick={() => handleEditNotesCancel()} color="secondary" sx={{ marginRight: 1 }}>
           Cancel
         </Button>
         <Button type="submit" disabled={updateResidentGeneralNotesIsMutating}>

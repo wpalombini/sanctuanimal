@@ -10,7 +10,7 @@ export const PageBodyContainer = ({ children }: { children: React.ReactNode }) =
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'column',
-        '> *': { marginBottom: '20px', width: { xs: '100%', lg: '75%' } },
+        '> *': { marginBottom: 3, width: { xs: '100%', lg: '75%' } },
       }}
     >
       {children}
