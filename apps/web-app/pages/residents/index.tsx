@@ -125,9 +125,9 @@ const ResidentsPage = () => {
             inputRef={searchFieldRef}
             InputProps={{
               endAdornment: <EndAdornment />,
+              sx: { paddingRight: 0 },
             }}
             placeholder="Search by name, species or breed"
-            sx={{ paddingRight: 0 }}
             onKeyDown={event => onEnter(event, handleSearch)}
           />
         </CardContent>
