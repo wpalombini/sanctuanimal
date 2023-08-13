@@ -1,4 +1,13 @@
-import { Box, Card, CardContent, Link as LinkMUI, TextField } from '@sanctuanimal/ui';
+import {
+  Box,
+  Card,
+  CardContent,
+  CloseIcon,
+  IconButton,
+  InputAdornment,
+  Link as LinkMUI,
+  TextField,
+} from '@sanctuanimal/ui';
 import isEmpty from 'lodash-es/isEmpty';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -35,6 +44,11 @@ const ResidentsPage = () => {
   const [filteredResidents, setFilteredResidents] = useState<typeof residents>();
 
   const getSearchValue = () => searchFieldRef.current?.value?.trim();
+  const resetSearchValue = () => {
+    if (searchFieldRef.current) {
+      searchFieldRef.current.value = '';
+    }
+  };
 
   const applyFilter = () => {
     if (!residents?.length) return;
@@ -78,6 +92,20 @@ const ResidentsPage = () => {
     });
   };
 
+  const EndAdornment = () => {
+    const handleClearSearch = () => {
+      resetSearchValue();
+      handleSearch();
+    };
+    return (
+      <InputAdornment position="end">
+        <IconButton aria-label="Clear search" onClick={() => handleClearSearch()}>
+          <CloseIcon />
+        </IconButton>
+      </InputAdornment>
+    );
+  };
+
   if (dataIsLoading) {
     return (
       <PageBodyContainer>
@@ -95,7 +123,11 @@ const ResidentsPage = () => {
           <TextField
             defaultValue={query['q']}
             inputRef={searchFieldRef}
+            InputProps={{
+              endAdornment: <EndAdornment />,
+            }}
             placeholder="Search by name, species or breed"
+            sx={{ paddingRight: 0 }}
             onKeyDown={event => onEnter(event, handleSearch)}
           />
         </CardContent>
