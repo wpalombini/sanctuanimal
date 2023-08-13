@@ -12,9 +12,7 @@ type ResidentItemProps = {
 };
 
 const ResidentItemLabel = ({ children }: { children: React.ReactNode }) => (
-  <Typography variant="body2" gutterBottom>
-    {children}
-  </Typography>
+  <Typography variant="subtitle1">{children}</Typography>
 );
 
 const ResidentItemValue = (props: TypographyProps) => (
@@ -33,6 +31,7 @@ const ResidentItemFieldGroup = ({ children }: { children: React.ReactNode }) => 
       display: 'flex',
       flexDirection: { xs: 'column', sm: 'row' },
       justifyContent: 'space-around',
+      gap: 1,
     }}
   >
     {children}
