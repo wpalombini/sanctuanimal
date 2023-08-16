@@ -5,7 +5,7 @@ import { useAuthContext } from '@/components/providers';
 import ResidentDetails from '@/components/residents/resident-details';
 import { ResidentDetailsForm } from '@/components/residents/resident-details/resident-details-edit';
 import { ResidentNotes } from '@/components/residents/resident-notes';
-import { PageBodyContainer, SpinnerPage } from '@/components/ui';
+import { BackComponent, PageBodyContainer, SpinnerPage } from '@/components/ui';
 import { trpc } from '@/lib/http/client/trpc';
 import { useNotificationStore } from '@/lib/stores';
 import { NotificationError, NotificationSuccess } from '@/lib/types';
@@ -60,6 +60,7 @@ const ResidentDetailsPage = () => {
 
   return (
     <PageBodyContainer>
+      <BackComponent />
       <ResidentDetails
         editResident={editResident}
         isMutating={updateResidentIsMutating}
