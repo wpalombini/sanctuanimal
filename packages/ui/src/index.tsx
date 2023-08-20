@@ -1,6 +1,7 @@
 export * from './cache';
 export * from './components/alert';
 export * from './components/appbar';
+export * from './components/avatar';
 export * from './components/box';
 export * from './components/button';
 export * from './components/card';
