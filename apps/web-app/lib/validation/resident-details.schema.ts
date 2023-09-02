@@ -33,7 +33,8 @@ const residentSchema = z.object({
   ),
   bio: validateString('Bio', false, 1000)
     .optional()
-    .transform(value => (value === '' ? undefined : value)),
+    .nullable()
+    .transform(value => (value === '' ? null : value)),
 });
 
 const idSchema = z.string().uuid('Invalid id');
