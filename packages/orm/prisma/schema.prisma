@@ -9,26 +9,41 @@ datasource db {
 }
 
 model User {
-  id          String      @id @default(uuid()) @db.VarChar(36)
-  name        String      @db.VarChar(100)
-  email       String      @unique @db.VarChar(100)
-  externalId  String      @db.VarChar(255)
-  createdAt   DateTime    @default(now()) @db.Timestamptz(3)
-  deletedAt   DateTime?   @db.Timestamptz(3)
-  updatedAt   DateTime    @updatedAt @db.Timestamptz(3)
-  sanctuaries Sanctuary[]
+  id            String          @id @default(uuid()) @db.VarChar(36)
+  name          String          @db.VarChar(100)
+  email         String          @unique @db.VarChar(100)
+  externalId    String          @db.VarChar(255)
+  createdAt     DateTime        @default(now()) @db.Timestamptz(3)
+  deletedAt     DateTime?       @db.Timestamptz(3)
+  updatedAt     DateTime        @updatedAt @db.Timestamptz(3)
+  sanctuaries   Sanctuary[]
+  userSanctuary UserSanctuary[]
+}
+
+model UserSanctuary {
+  role        UserRole  @default(VOLUNTEER)
+  createdAt   DateTime  @default(now()) @db.Timestamptz(3)
+  deletedAt   DateTime? @db.Timestamptz(3)
+  updatedAt   DateTime  @updatedAt @db.Timestamptz(3)
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String    @db.VarChar(36)
+  sanctuary   Sanctuary @relation(fields: [sanctuaryId], references: [id])
+  sanctuaryId String    @db.VarChar(36)
+
+  @@id([userId, sanctuaryId])
 }
 
 model Sanctuary {
-  id        String    @id @default(uuid()) @db.VarChar(36)
-  contact   String    @db.VarChar(100)
-  name      String    @db.VarChar(100)
-  createdAt DateTime  @default(now()) @db.Timestamptz(3)
-  deletedAt DateTime? @db.Timestamptz(3)
-  updatedAt DateTime  @updatedAt @db.Timestamptz(3)
-  user      User      @relation(fields: [userId], references: [id])
-  userId    String    @db.VarChar(36)
-  animals   Animal[]
+  id            String          @id @default(uuid()) @db.VarChar(36)
+  contact       String          @db.VarChar(100)
+  name          String          @db.VarChar(100)
+  createdAt     DateTime        @default(now()) @db.Timestamptz(3)
+  deletedAt     DateTime?       @db.Timestamptz(3)
+  updatedAt     DateTime        @updatedAt @db.Timestamptz(3)
+  user          User            @relation(fields: [userId], references: [id])
+  userId        String          @db.VarChar(36)
+  animals       Animal[]
+  userSanctuary UserSanctuary[]
 }
 
 model Animal {
@@ -57,4 +72,10 @@ model HistoricalNotes {
   updatedAt          DateTime  @updatedAt @db.Timestamptz(3)
   animal             Animal    @relation(fields: [animalId], references: [id])
   animalId           String    @db.VarChar(36)
+}
+
+enum UserRole {
+  ADMIN
+  MANAGER
+  VOLUNTEER
 }
