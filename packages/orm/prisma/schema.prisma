@@ -16,7 +16,6 @@ model User {
   createdAt     DateTime        @default(now()) @db.Timestamptz(3)
   deletedAt     DateTime?       @db.Timestamptz(3)
   updatedAt     DateTime        @updatedAt @db.Timestamptz(3)
-  sanctuaries   Sanctuary[]
   userSanctuary UserSanctuary[]
 }
 
@@ -40,8 +39,6 @@ model Sanctuary {
   createdAt     DateTime        @default(now()) @db.Timestamptz(3)
   deletedAt     DateTime?       @db.Timestamptz(3)
   updatedAt     DateTime        @updatedAt @db.Timestamptz(3)
-  user          User            @relation(fields: [userId], references: [id])
-  userId        String          @db.VarChar(36)
   animals       Animal[]
   userSanctuary UserSanctuary[]
 }
