@@ -1,16 +1,15 @@
-import isEmpty from 'lodash-es/isEmpty';
+import { Box, Button, Link as LinkMUI } from '@sanctuanimal/ui';
+import Link from 'next/link';
 import { useState } from 'react';
 
 import AccountDetails from '@/components/account/account-details';
 import { useAuthContext } from '@/components/providers';
-import SanctuaryDetails from '@/components/sanctuary/sanctuary-details';
-import { NewResidentBtnContainer, PageBodyContainer, SpinnerPage } from '@/components/ui';
+import { PageBodyContainer, SpinnerPage } from '@/components/ui';
 import { trpc } from '@/lib/http/client/trpc';
 import { useNotificationStore } from '@/lib/stores';
 import { NotificationError, NotificationSuccess } from '@/lib/types';
 
 const AccountPage = () => {
-  const [editSanctuary, setEditSanctuary] = useState(false);
   const [editAccount, setEditAccount] = useState(false);
   const { user, loading: userIsLoading } = useAuthContext();
   const { setNotification } = useNotificationStore();
@@ -31,19 +30,6 @@ const AccountPage = () => {
   const invalidateGetSanctuariesForAccount = () => {
     utils.getSanctuariesForAccount.invalidate();
   };
-
-  const { isLoading: upsertSanctuaryIsMutating, mutate: upsertSanctuary } =
-    trpc.upsertSanctuary.useMutation({
-      onSuccess() {
-        invalidateGetSanctuariesForAccount();
-        setEditSanctuary(false);
-        setNotification(NotificationSuccess);
-      },
-      onError(error) {
-        console.error('onError upsertSanctuary', error);
-        setNotification(NotificationError);
-      },
-    });
 
   const { isLoading: updateAccountIsMutating, mutate: updateAccount } =
     trpc.updateAccount.useMutation({
@@ -68,15 +54,12 @@ const AccountPage = () => {
 
   return (
     <PageBodyContainer>
-      {!isEmpty(sanctuariesData?.sanctuaries) && <NewResidentBtnContainer />}
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <LinkMUI href="/sanctuaries" component={Link} sx={{ width: { xs: '100%', sm: '25%' } }}>
+          <Button sx={{ width: '100%' }}>Sanctuaries</Button>
+        </LinkMUI>
+      </Box>
 
-      <SanctuaryDetails
-        editSanctuary={editSanctuary}
-        isMutating={upsertSanctuaryIsMutating}
-        sanctuaries={sanctuariesData?.sanctuaries}
-        setEditSanctuary={setEditSanctuary}
-        upsertSanctuary={upsertSanctuary}
-      />
       <AccountDetails
         account={sanctuariesData?.user}
         editAccount={editAccount}

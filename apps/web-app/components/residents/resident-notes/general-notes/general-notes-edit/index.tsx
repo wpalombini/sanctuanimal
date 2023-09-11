@@ -22,7 +22,7 @@ export const GeneralNotesEdit = ({ residentData }: GeneralNotesProps) => {
   const { isLoading: updateResidentGeneralNotesIsMutating, mutate: updateGeneralNotes } =
     trpc.updateResidentGeneralNotes.useMutation({
       onSuccess(data, variables) {
-        utils.getResidentById.invalidate({ id: variables.id });
+        utils.getResidentById.invalidate({ id: variables.id, sanctuaryId: variables.sanctuaryId });
         setNotification(NotificationSuccess);
         setEditGeneralNotes(false);
       },
@@ -47,6 +47,7 @@ export const GeneralNotesEdit = ({ residentData }: GeneralNotesProps) => {
     updateGeneralNotes({
       ...formData,
       id: residentData.id as string,
+      sanctuaryId: residentData.sanctuaryId as string,
     });
   };
 

@@ -23,4 +23,5 @@ export const newHistoricalNoteSchema = z.object({
 
 export const serverNewHistoricalNoteSchema = newHistoricalNoteSchema.extend({
   residentId: idSchema,
+  sanctuaryId: idSchema,
 });

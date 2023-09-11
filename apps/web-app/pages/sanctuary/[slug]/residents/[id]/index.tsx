@@ -12,6 +12,7 @@ import { NotificationError, NotificationSuccess } from '@/lib/types';
 
 const ResidentDetailsPage = () => {
   const params = useRouter();
+  const sanctuaryId = params.query.slug as string;
   const { user, loading: userIsLoading } = useAuthContext();
   const { setNotification } = useNotificationStore();
   const [editResident, setEditResident] = useState(false);
@@ -19,7 +20,7 @@ const ResidentDetailsPage = () => {
   const utils = trpc.useContext();
 
   const { data: residentData, isLoading: residentDataIsLoading } = trpc.getResidentById.useQuery(
-    { id: params.query.id as string },
+    { id: params.query.id as string, sanctuaryId },
     {
       enabled: !!user,
       staleTime: Infinity,
@@ -29,7 +30,7 @@ const ResidentDetailsPage = () => {
   const { isLoading: updateResidentIsMutating, mutate: updateResident } =
     trpc.updateResident.useMutation({
       onSuccess(data, variables) {
-        utils.getResidentById.invalidate({ id: variables.id });
+        utils.getResidentById.invalidate({ id: variables.id, sanctuaryId: variables.sanctuaryId });
         utils.getResidents.invalidate();
         setNotification(NotificationSuccess);
         setEditResident(false);
@@ -47,6 +48,7 @@ const ResidentDetailsPage = () => {
       ...formData,
       dateOfBirth: formData.dateOfBirth ? (formData.dateOfBirth as string) : null,
       id: residentData?.id as string,
+      sanctuaryId,
     });
   };
 

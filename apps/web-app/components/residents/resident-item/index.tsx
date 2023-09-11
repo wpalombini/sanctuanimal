@@ -1,6 +1,7 @@
-import { Box, Card, CardContent, Typography, TypographyProps } from '@sanctuanimal/ui';
+import { Card, CardContent } from '@sanctuanimal/ui';
 import React from 'react';
 
+import { ItemField, ItemFieldGroup, ItemLabel, ItemValue } from '@/components/ui/list-items';
 import { getLabelForGenderValue } from '@/lib/utils';
 
 type ResidentItemProps = {
@@ -11,70 +12,41 @@ type ResidentItemProps = {
   species: string;
 };
 
-const ResidentItemLabel = ({ children }: { children: React.ReactNode }) => (
-  <Typography variant="subtitle1">{children}</Typography>
-);
-
-const ResidentItemValue = (props: TypographyProps) => (
-  <Typography {...props} noWrap fontWeight="500" />
-);
-
-const ResidentItemField = ({ children }: { children: React.ReactNode }) => (
-  <Box sx={{ paddingX: 1, width: { xs: '100%', sm: '110px', md: '170px', xl: '200px' } }}>
-    {children}
-  </Box>
-);
-
-const ResidentItemFieldGroup = ({ children }: { children: React.ReactNode }) => (
-  <Box
-    sx={{
-      display: 'flex',
-      flexDirection: { xs: 'column', sm: 'row' },
-      justifyContent: 'space-around',
-      gap: 1,
-    }}
-  >
-    {children}
-  </Box>
-);
-
 export const ResidentItem = ({ resident }: { resident: ResidentItemProps }) => {
   return (
     <Card>
       <CardContent>
-        <ResidentItemFieldGroup>
+        <ItemFieldGroup>
           {/* Name */}
-          <ResidentItemField>
-            <ResidentItemLabel>Name:</ResidentItemLabel>
-            <ResidentItemValue sx={{ fontSize: '20px', lineHeight: '1.1' }}>
-              {resident.name}
-            </ResidentItemValue>
-          </ResidentItemField>
+          <ItemField>
+            <ItemLabel>Name:</ItemLabel>
+            <ItemValue sx={{ fontSize: '20px', lineHeight: '1.1' }}>{resident.name}</ItemValue>
+          </ItemField>
 
           {/* Species */}
-          <ResidentItemField>
-            <ResidentItemLabel>Species:</ResidentItemLabel>
-            <ResidentItemValue>{resident.species}</ResidentItemValue>
-          </ResidentItemField>
+          <ItemField>
+            <ItemLabel>Species:</ItemLabel>
+            <ItemValue>{resident.species}</ItemValue>
+          </ItemField>
 
           {/* Breed */}
-          <ResidentItemField>
-            <ResidentItemLabel>Breed:</ResidentItemLabel>
-            <ResidentItemValue>{resident.breed}</ResidentItemValue>
-          </ResidentItemField>
+          <ItemField>
+            <ItemLabel>Breed:</ItemLabel>
+            <ItemValue>{resident.breed}</ItemValue>
+          </ItemField>
 
           {/* Gender */}
-          <ResidentItemField>
-            <ResidentItemLabel>Gender:</ResidentItemLabel>
-            <ResidentItemValue>{getLabelForGenderValue(resident.gender)}</ResidentItemValue>
-          </ResidentItemField>
+          <ItemField>
+            <ItemLabel>Gender:</ItemLabel>
+            <ItemValue>{getLabelForGenderValue(resident.gender)}</ItemValue>
+          </ItemField>
 
           {/* DOB */}
-          <ResidentItemField>
-            <ResidentItemLabel>DOB:</ResidentItemLabel>
-            <ResidentItemValue>{resident.dateOfBirth}</ResidentItemValue>
-          </ResidentItemField>
-        </ResidentItemFieldGroup>
+          <ItemField>
+            <ItemLabel>DOB:</ItemLabel>
+            <ItemValue>{resident.dateOfBirth}</ItemValue>
+          </ItemField>
+        </ItemFieldGroup>
       </CardContent>
     </Card>
   );

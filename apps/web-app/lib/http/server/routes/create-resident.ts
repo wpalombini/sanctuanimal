@@ -7,22 +7,30 @@ import { protectedProcedure } from '../trpc';
 
 export const createResident = () => {
   return protectedProcedure.input(serverCreateResidentSchema).mutation(async opts => {
-    const { user: authUSer } = opts.ctx;
+    const { user: authUser } = opts.ctx;
     const input = opts.input;
 
-    if (!authUSer.email) throw new TRPCError({ code: 'PRECONDITION_FAILED' });
+    if (!authUser.email) throw new TRPCError({ code: 'PRECONDITION_FAILED' });
+
+    const user = await prisma.user.findUnique({
+      where: {
+        email: authUser.email,
+      },
+    });
+
+    if (!user || user.deletedAt !== null) throw new TRPCError({ code: 'PRECONDITION_FAILED' });
+
+    const userSanctuaries = await prisma.userSanctuary.findMany({
+      where: {
+        sanctuaryId: input.sanctuaryId,
+        userId: user.id,
+      },
+    });
+
+    if (userSanctuaries.length !== 1)
+      throw new TRPCError({ code: userSanctuaries.length === 0 ? 'FORBIDDEN' : 'CONFLICT' });
 
     try {
-      const sanctuaries = await prisma.sanctuary.findMany({
-        where: {
-          user: { externalId: authUSer.uid },
-        },
-      });
-
-      if (!sanctuaries?.length) {
-        throw new Error(`Sanctuary not found for account ${authUSer.email}`);
-      }
-
       const animal = await prisma.animal.create({
         data: {
           name: input.name,
@@ -31,7 +39,7 @@ export const createResident = () => {
           gender: input.gender,
           dateOfBirth: input.dateOfBirth || undefined,
           bio: input.bio || undefined,
-          sanctuaryId: sanctuaries[0].id,
+          sanctuaryId: input.sanctuaryId,
         },
       });
 
@@ -39,7 +47,7 @@ export const createResident = () => {
         ...animal,
       };
     } catch (error) {
-      console.error(`Error upserting resident for account ${authUSer.email}`, error);
+      console.error(`Error creating resident for account ${authUser.email}`, error);
       throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'An error occurred' });
     }
   });

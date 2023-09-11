@@ -1,7 +1,6 @@
 import {
   Box,
   Card,
-  CardContent,
   CloseIcon,
   IconButton,
   InputAdornment,
@@ -20,7 +19,8 @@ import { trpc } from '@/lib/http/client/trpc';
 import { onEnter } from '@/lib/utils';
 
 const ResidentsPage = () => {
-  const { query, pathname, push } = useRouter();
+  const { pathname, query, push } = useRouter();
+  const sanctuaryId = query.slug as string;
 
   const { user, loading: userIsLoading } = useAuthContext();
 
@@ -30,7 +30,7 @@ const ResidentsPage = () => {
   });
 
   const { data: residents, isLoading: residentDataIsLoading } = trpc.getResidents.useQuery(
-    undefined,
+    { sanctuaryId },
     {
       enabled: !!user,
       staleTime: Infinity,
@@ -85,9 +85,8 @@ const ResidentsPage = () => {
 
   const handleSearch = () => {
     const query = getSearchValue();
-
     push({
-      pathname,
+      pathname: pathname.replace('[slug]', sanctuaryId),
       query: query ? { q: query } : undefined,
     });
   };
@@ -116,26 +115,26 @@ const ResidentsPage = () => {
 
   return (
     <PageBodyContainer>
-      {!isEmpty(sanctuariesData?.sanctuaries) && <NewResidentBtnContainer />}
+      {!isEmpty(sanctuariesData?.sanctuaries) && (
+        <NewResidentBtnContainer sanctuaryId={sanctuaryId} />
+      )}
 
-      <Card>
-        <CardContent>
-          <TextField
-            defaultValue={query['q']}
-            inputRef={searchFieldRef}
-            InputProps={{
-              endAdornment: <EndAdornment />,
-              sx: { paddingRight: 0 },
-            }}
-            placeholder="Search by name, species or breed"
-            onKeyDown={event => onEnter(event, handleSearch)}
-          />
-        </CardContent>
+      <Card elevation={0}>
+        <TextField
+          defaultValue={query['q']}
+          inputRef={searchFieldRef}
+          InputProps={{
+            endAdornment: <EndAdornment />,
+            sx: { paddingRight: 0 },
+          }}
+          placeholder="Search by name, species or breed"
+          onKeyDown={event => onEnter(event, handleSearch)}
+        />
       </Card>
 
       {filteredResidents?.map(resident => (
         <Box key={resident.id}>
-          <LinkMUI href={`/residents/${resident.id}`} component={Link}>
+          <LinkMUI href={`/sanctuary/${sanctuaryId}/residents/${resident.id}`} component={Link}>
             <ResidentItem resident={resident} />
           </LinkMUI>
         </Box>

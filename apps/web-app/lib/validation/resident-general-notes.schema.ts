@@ -14,4 +14,5 @@ export const updateGeneralNotesSchema = z.object({
 
 export const serverUpdateGeneralNotesSchema = updateGeneralNotesSchema.extend({
   id: idSchema,
+  sanctuaryId: idSchema,
 });

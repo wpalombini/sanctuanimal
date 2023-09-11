@@ -12,7 +12,7 @@ export const ResidentDetailsGeneralNotes = () => {
   const { editGeneralNotes, setEditGeneralNotes } = useResidentNotesStore();
 
   const { data: residentData } = trpc.getResidentById.useQuery(
-    { id: params.query.id as string },
+    { id: params.query.id as string, sanctuaryId: params.query.slug as string },
     { staleTime: Infinity },
   );
 
@@ -31,8 +31,9 @@ export const ResidentDetailsGeneralNotes = () => {
       {editGeneralNotes && residentData && (
         <GeneralNotesEdit
           residentData={{
-            id: residentData.id as string,
+            id: residentData.id,
             generalNotes: residentData.generalNotes as string,
+            sanctuaryId: residentData.sanctuaryId,
           }}
         />
       )}

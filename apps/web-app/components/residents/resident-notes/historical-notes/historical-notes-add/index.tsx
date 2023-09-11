@@ -15,6 +15,7 @@ type HistoricalNotesForm = TypeOf<typeof newHistoricalNoteSchema>;
 export const HistoricalNotesAdd = () => {
   const params = useRouter();
   const residentId = params.query.id as string;
+  const sanctuaryId = params.query.slug as string;
 
   const { setAddHistoricalNote } = useResidentNotesStore();
   const { setNotification } = useNotificationStore();
@@ -26,7 +27,10 @@ export const HistoricalNotesAdd = () => {
     mutate: createResidentHistoricalNote,
   } = trpc.createResidentHistoricalNote.useMutation({
     onSuccess(data, variables) {
-      utils.getResidentHistoricalNotes.invalidate({ residentId: variables.residentId });
+      utils.getResidentHistoricalNotes.invalidate({
+        id: variables.residentId,
+        sanctuaryId: variables.sanctuaryId,
+      });
       setNotification(NotificationSuccess);
       setAddHistoricalNote(false);
     },
@@ -51,6 +55,7 @@ export const HistoricalNotesAdd = () => {
     createResidentHistoricalNote({
       ...formData,
       residentId,
+      sanctuaryId,
     });
   };
 

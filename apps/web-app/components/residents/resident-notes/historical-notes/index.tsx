@@ -13,7 +13,7 @@ export const ResidentDetailsHistoricalNotes = () => {
 
   const { data: residentHistoricalNotes, isLoading: residentHistoricalNotesIsLoading } =
     trpc.getResidentHistoricalNotes.useQuery(
-      { residentId: params.query.id as string },
+      { id: params.query.id as string, sanctuaryId: params.query.slug as string },
       { staleTime: Infinity },
     );
 

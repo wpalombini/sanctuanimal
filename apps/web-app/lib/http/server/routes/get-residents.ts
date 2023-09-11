@@ -1,40 +1,58 @@
 import { TRPCError } from '@trpc/server';
+import { z } from 'zod';
 
 import { prisma } from '@/lib/prisma';
 
 import { protectedProcedure } from '../trpc';
 
 export const getResidents = () => {
-  return protectedProcedure.query(async opts => {
-    const { user: authUSer } = opts.ctx;
+  return protectedProcedure
+    .input(z.object({ sanctuaryId: z.string().uuid() }))
+    .query(async opts => {
+      const { user: authUser } = opts.ctx;
+      const { sanctuaryId } = opts.input;
 
-    if (!authUSer.email) throw new TRPCError({ code: 'PRECONDITION_FAILED' });
+      if (!authUser.email) throw new TRPCError({ code: 'PRECONDITION_FAILED' });
 
-    try {
-      return await prisma.animal.findMany({
+      const user = await prisma.user.findUnique({
         where: {
-          sanctuary: {
-            user: {
-              externalId: authUSer.uid,
-            },
-          },
-          deletedAt: null,
-        },
-        orderBy: {
-          updatedAt: 'desc',
-        },
-        select: {
-          id: true,
-          name: true,
-          species: true,
-          breed: true,
-          gender: true,
-          dateOfBirth: true,
+          email: authUser.email,
         },
       });
-    } catch (error) {
-      console.error(`Error getResidents for account ${authUSer.email}`, error);
-      throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'An error occurred' });
-    }
-  });
+
+      if (!user || user.deletedAt !== null) throw new TRPCError({ code: 'PRECONDITION_FAILED' });
+
+      const userSanctuaries = await prisma.userSanctuary.findMany({
+        where: {
+          sanctuaryId: sanctuaryId,
+          userId: user.id,
+        },
+      });
+
+      if (userSanctuaries.length !== 1)
+        throw new TRPCError({ code: userSanctuaries.length === 0 ? 'FORBIDDEN' : 'CONFLICT' });
+
+      try {
+        return await prisma.animal.findMany({
+          where: {
+            sanctuaryId,
+            deletedAt: null,
+          },
+          orderBy: {
+            updatedAt: 'desc',
+          },
+          select: {
+            id: true,
+            name: true,
+            species: true,
+            breed: true,
+            gender: true,
+            dateOfBirth: true,
+          },
+        });
+      } catch (error) {
+        console.error(`Error getResidents for account ${authUser.email}`, error);
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'An error occurred' });
+      }
+    });
 };

@@ -1,11 +1,12 @@
 import { TRPCError } from '@trpc/server';
+import { z } from 'zod';
 
 import { prisma } from '@/lib/prisma';
 
 import { protectedProcedure } from '../trpc';
 
-export const getSanctuariesForAccount = () => {
-  return protectedProcedure.query(async opts => {
+export const getSanctuaryById = () => {
+  return protectedProcedure.input(z.object({ id: z.string().uuid() })).query(async opts => {
     const { user: authUser } = opts.ctx;
 
     if (!authUser.email) throw new TRPCError({ code: 'PRECONDITION_FAILED' });
@@ -21,6 +22,7 @@ export const getSanctuariesForAccount = () => {
     const userSanctuaries = await prisma.userSanctuary.findMany({
       where: {
         userId: user.id,
+        sanctuaryId: opts.input.id,
       },
       include: {
         sanctuary: true,
@@ -34,6 +36,9 @@ export const getSanctuariesForAccount = () => {
         role: userSanctuary.role,
       }));
 
-    return { sanctuaries, user };
+    if (sanctuaries.length !== 1)
+      throw new TRPCError({ code: sanctuaries.length === 0 ? 'NOT_FOUND' : 'CONFLICT' });
+
+    return { ...sanctuaries[0] };
   });
 };

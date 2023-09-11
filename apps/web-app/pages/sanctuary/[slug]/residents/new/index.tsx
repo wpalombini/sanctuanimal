@@ -8,7 +8,7 @@ import { useNotificationStore } from '@/lib/stores';
 import { NotificationError, NotificationSuccess } from '@/lib/types';
 
 const NewResidentPage = () => {
-  const { replace } = useRouter();
+  const { query, replace } = useRouter();
   const { setNotification } = useNotificationStore();
 
   const utils = trpc.useContext();
@@ -18,7 +18,7 @@ const NewResidentPage = () => {
       onSuccess(data) {
         utils.getResidents.invalidate();
         setNotification(NotificationSuccess);
-        replace(`/residents/${data.id}`);
+        replace(`/sanctuary/${data.sanctuaryId}/residents/${data.id}`);
       },
       onError(error) {
         console.error('onError createResident', error);
@@ -30,6 +30,7 @@ const NewResidentPage = () => {
     createResident({
       ...formData,
       dateOfBirth: formData.dateOfBirth ? (formData.dateOfBirth as string) : null,
+      sanctuaryId: query.slug as string,
     });
   };
 

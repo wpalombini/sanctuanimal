@@ -1,21 +1,25 @@
 import {
   createResident,
   createResidentHistoricalNote,
+  createSanctuary,
   getResidentById,
   getResidentHistoricalNotes,
   getResidents,
   getSanctuariesForAccount,
+  getSanctuaryById,
   updateAccount,
   updateResident,
   updateResidentGeneralNotes,
-  upsertSanctuary,
+  updateSanctuary,
 } from './routes';
 import { router } from './trpc';
 
 export const appRouter = router({
   // Sanctuaries
+  createSanctuary: createSanctuary(),
+  getSanctuaryById: getSanctuaryById(),
   getSanctuariesForAccount: getSanctuariesForAccount(),
-  upsertSanctuary: upsertSanctuary(),
+  updateSanctuary: updateSanctuary(),
 
   // Account
   updateAccount: updateAccount(),

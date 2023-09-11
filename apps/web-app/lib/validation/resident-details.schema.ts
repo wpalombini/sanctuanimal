@@ -54,12 +54,10 @@ export const clientCreateResidentSchema = residentSchema.extend({
 
 export const serverCreateResidentSchema = residentSchema.extend({
   dateOfBirth: dateOfBirthStringSchema,
-});
-
-export const clientUpdateResidentSchema = clientCreateResidentSchema.extend({
-  id: idSchema,
+  sanctuaryId: idSchema,
 });
 
 export const serverUpdateResidentSchema = serverCreateResidentSchema.extend({
   id: idSchema,
+  sanctuaryId: idSchema,
 });
