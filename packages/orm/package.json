@@ -1,7 +1,6 @@
 {
   "name": "@sanctuanimal/orm",
   "version": "0.0.1",
-  "type": "module",
   "main": "./generated/index.js",
   "types": "./generated/index.d.ts",
   "scripts": {

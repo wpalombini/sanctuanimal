@@ -1,4 +1,4 @@
-import { PrismaClient } from '../generated/index.js';
+import { PrismaClient } from '../generated';
 
 const prisma = new PrismaClient({
   log: ['query'],
@@ -42,11 +42,12 @@ const main = async () => {
   });
 };
 
-try {
-  await main();
-} catch (e) {
-  console.error(e);
-  process.exit(1);
-} finally {
-  await prisma.$disconnect();
-}
+// eslint-disable-next-line promise/catch-or-return
+main()
+  .catch(e => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(() => {
+    prisma.$disconnect();
+  });

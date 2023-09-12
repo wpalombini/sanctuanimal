@@ -2,9 +2,6 @@
   "extends": "tsconfig/base.json",
   "include": ["."],
   "compilerOptions": {
-    "target": "es2017",
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
     "lib": ["ESNext"],
     "outDir": "dist",
     "sourceMap": false,
