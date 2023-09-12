@@ -14,6 +14,7 @@
     "lint": "turbo run lint --no-daemon",
     "format": "prettier --check \"**/*.{ts,tsx,md}\"",
     "format:fix": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "db:dev:up": "turbo run db:dev:up --no-daemon",
     "start:emulators": "firebase emulators:start --import=./emulators-data --export-on-exit"
   },
   "devDependencies": {
