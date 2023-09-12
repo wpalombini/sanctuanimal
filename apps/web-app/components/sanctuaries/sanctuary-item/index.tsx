@@ -1,6 +1,6 @@
 import { Box, Card, CardContent, CreateIcon, IconButton } from '@sanctuanimal/ui';
 
-import { ItemField, ItemFieldGroup, ItemLabel, ItemValue } from '@/components/ui/list-items';
+import { ItemLabel, ItemValue } from '@/components/ui/list-items';
 
 type SanctuaryItemProps = {
   contact: string;
@@ -12,38 +12,39 @@ export const SanctuaryItem = ({ contact, name, role }: SanctuaryItemProps) => {
   return (
     <Card>
       <CardContent>
-        <ItemFieldGroup>
-          {/* Name */}
-          <ItemField>
-            <ItemLabel>Name:</ItemLabel>
-            <ItemValue sx={{ fontSize: '20px', lineHeight: '1.1' }}>{name}</ItemValue>
-          </ItemField>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            {/* Name */}
+            <Box sx={{ paddingX: 1 }}>
+              <ItemLabel>Name:</ItemLabel>
+              <ItemValue sx={{ fontSize: '20px', lineHeight: '1.1' }}>{name}</ItemValue>
+            </Box>
+            {/* Action */}
+            <Box>
+              <IconButton
+                aria-label="edit sanctuary"
+                onClick={e => {
+                  e.preventDefault();
+                  console.log();
+                }}
+              >
+                <CreateIcon />
+              </IconButton>
+            </Box>
+          </Box>
 
           {/* Contact */}
-          <ItemField>
+          <Box sx={{ paddingX: 1 }}>
             <ItemLabel>Contact:</ItemLabel>
             <ItemValue>{contact}</ItemValue>
-          </ItemField>
+          </Box>
 
           {/* Role */}
-          <ItemField>
+          <Box sx={{ paddingX: 1, width: { xs: '100%', sm: '50%' } }}>
             <ItemLabel>Role:</ItemLabel>
             <ItemValue>{role}</ItemValue>
-          </ItemField>
-
-          {/* Action */}
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <IconButton
-              aria-label="edit sanctuary"
-              onClick={e => {
-                e.preventDefault();
-                console.log();
-              }}
-            >
-              <CreateIcon />
-            </IconButton>
           </Box>
-        </ItemFieldGroup>
+        </Box>
       </CardContent>
     </Card>
   );

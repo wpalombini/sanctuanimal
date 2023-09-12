@@ -90,8 +90,8 @@ export const AuthMenu = () => {
               </MenuItem>
             )}
             {isSanctuarySetup && (
-              <MenuItem key={2} onClick={() => handleNavigateTo('/residents')}>
-                <Typography textAlign="center">Residents</Typography>
+              <MenuItem key={2} onClick={() => handleNavigateTo('/sanctuaries')}>
+                <Typography textAlign="center">Sanctuaries</Typography>
               </MenuItem>
             )}
             <MenuItem key={3} onClick={() => handleNavigateTo('/account')}>

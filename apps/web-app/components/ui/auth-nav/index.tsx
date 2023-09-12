@@ -10,8 +10,8 @@ export const AuthNav = () => {
     <Box sx={{ flexGrow: 1, '& > a': { paddingLeft: 2, display: { xs: 'none', sm: 'inline' } } }}>
       {!!user && (
         <>
-          <LinkMUI color="inherit" href="/account" component={Link}>
-            Account
+          <LinkMUI color="inherit" href="/sanctuaries" component={Link}>
+            Sanctuaries
           </LinkMUI>
         </>
       )}

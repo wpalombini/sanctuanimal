@@ -28,18 +28,22 @@ const SanctuariesPage = () => {
   return (
     <PageBodyContainer>
       <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <LinkMUI href="/sanctuaries/new" component={Link} sx={{ width: { xs: '100%', sm: '25%' } }}>
+        <LinkMUI href="/sanctuaries/new" component={Link} sx={{ width: { xs: '100%', sm: '30%' } }}>
           <Button sx={{ width: '100%' }}>New Sanctuary</Button>
         </LinkMUI>
       </Box>
 
-      {sanctuariesData?.sanctuaries.map(sanctuary => (
-        <Box key={sanctuary.id}>
-          <LinkMUI href={`/sanctuary/${sanctuary.id}/residents`} component={Link}>
-            <SanctuaryItem {...sanctuary} />
-          </LinkMUI>
-        </Box>
-      ))}
+      <Box
+        sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: { xs: 5, lg: 10 } }}
+      >
+        {sanctuariesData?.sanctuaries.map(sanctuary => (
+          <Box key={sanctuary.id} sx={{ width: { xs: '100%', md: '50%' } }}>
+            <LinkMUI href={`/sanctuary/${sanctuary.id}/residents`} component={Link}>
+              <SanctuaryItem {...sanctuary} />
+            </LinkMUI>
+          </Box>
+        ))}
+      </Box>
     </PageBodyContainer>
   );
 };
