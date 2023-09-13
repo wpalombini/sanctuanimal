@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, CreateIcon, IconButton } from '@sanctuanimal/ui';
+import { Box, Card, CardContent } from '@sanctuanimal/ui';
 
 import { ItemLabel, ItemValue } from '@/components/ui/list-items';
 
@@ -19,18 +19,6 @@ export const SanctuaryItem = ({ contact, name, role }: SanctuaryItemProps) => {
               <ItemLabel>Name:</ItemLabel>
               <ItemValue sx={{ fontSize: '20px', lineHeight: '1.1' }}>{name}</ItemValue>
             </Box>
-            {/* Action */}
-            <Box>
-              <IconButton
-                aria-label="edit sanctuary"
-                onClick={e => {
-                  e.preventDefault();
-                  console.log();
-                }}
-              >
-                <CreateIcon />
-              </IconButton>
-            </Box>
           </Box>
 
           {/* Contact */}
@@ -40,7 +28,7 @@ export const SanctuaryItem = ({ contact, name, role }: SanctuaryItemProps) => {
           </Box>
 
           {/* Role */}
-          <Box sx={{ paddingX: 1, width: { xs: '100%', sm: '50%' } }}>
+          <Box sx={{ paddingX: 1 }}>
             <ItemLabel>Role:</ItemLabel>
             <ItemValue>{role}</ItemValue>
           </Box>

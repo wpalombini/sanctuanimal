@@ -7,16 +7,36 @@ import {
   Link as LinkMUI,
   TextField,
 } from '@sanctuanimal/ui';
-import isEmpty from 'lodash-es/isEmpty';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 
 import { useAuthContext } from '@/components/providers';
 import { ResidentItem } from '@/components/residents/resident-item';
+import { SanctuaryDetailsContainer } from '@/components/sanctuaries/sanctuary-details-container';
 import { NewResidentBtnContainer, PageBodyContainer, SpinnerPage } from '@/components/ui';
 import { trpc } from '@/lib/http/client/trpc';
 import { onEnter } from '@/lib/utils';
+
+const EndAdornment = ({
+  handleSearch,
+  resetSearchValue,
+}: {
+  handleSearch: () => void;
+  resetSearchValue: () => void;
+}) => {
+  const handleClearSearch = () => {
+    resetSearchValue();
+    handleSearch();
+  };
+  return (
+    <InputAdornment position="end">
+      <IconButton aria-label="Clear search" onClick={() => handleClearSearch()}>
+        <CloseIcon />
+      </IconButton>
+    </InputAdornment>
+  );
+};
 
 const ResidentsPage = () => {
   const { pathname, query, push } = useRouter();
@@ -24,10 +44,13 @@ const ResidentsPage = () => {
 
   const { user, loading: userIsLoading } = useAuthContext();
 
-  const { data: sanctuariesData } = trpc.getSanctuariesForAccount.useQuery(undefined, {
-    enabled: !!user,
-    staleTime: Infinity,
-  });
+  const { data: sanctuaryData, isLoading: sanctuaryDataIsLoading } = trpc.getSanctuaryById.useQuery(
+    { id: sanctuaryId },
+    {
+      enabled: !!user,
+      staleTime: Infinity,
+    },
+  );
 
   const { data: residents, isLoading: residentDataIsLoading } = trpc.getResidents.useQuery(
     { sanctuaryId },
@@ -37,7 +60,7 @@ const ResidentsPage = () => {
     },
   );
 
-  const dataIsLoading = userIsLoading || residentDataIsLoading;
+  const dataIsLoading = userIsLoading || sanctuaryDataIsLoading || residentDataIsLoading;
 
   const searchFieldRef = useRef<HTMLInputElement>(null);
 
@@ -91,20 +114,6 @@ const ResidentsPage = () => {
     });
   };
 
-  const EndAdornment = () => {
-    const handleClearSearch = () => {
-      resetSearchValue();
-      handleSearch();
-    };
-    return (
-      <InputAdornment position="end">
-        <IconButton aria-label="Clear search" onClick={() => handleClearSearch()}>
-          <CloseIcon />
-        </IconButton>
-      </InputAdornment>
-    );
-  };
-
   if (dataIsLoading) {
     return (
       <PageBodyContainer>
@@ -115,16 +124,21 @@ const ResidentsPage = () => {
 
   return (
     <PageBodyContainer>
-      {!isEmpty(sanctuariesData?.sanctuaries) && (
-        <NewResidentBtnContainer sanctuaryId={sanctuaryId} />
-      )}
+      {/* New Resident button */}
+      <NewResidentBtnContainer sanctuaryId={sanctuaryId} />
 
+      {/* Sanctuary Details container */}
+      <SanctuaryDetailsContainer sanctuaryData={sanctuaryData} />
+
+      {/* Search residents field */}
       <Card elevation={0}>
         <TextField
           defaultValue={query['q']}
           inputRef={searchFieldRef}
           InputProps={{
-            endAdornment: <EndAdornment />,
+            endAdornment: (
+              <EndAdornment handleSearch={handleSearch} resetSearchValue={resetSearchValue} />
+            ),
             sx: { paddingRight: 0 },
           }}
           placeholder="Search by name, species or breed"
@@ -132,6 +146,7 @@ const ResidentsPage = () => {
         />
       </Card>
 
+      {/* Residents list */}
       {filteredResidents?.map(resident => (
         <Box key={resident.id}>
           <LinkMUI href={`/sanctuary/${sanctuaryId}/residents/${resident.id}`} component={Link}>
