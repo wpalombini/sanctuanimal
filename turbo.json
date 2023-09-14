@@ -49,9 +49,6 @@
     },
     "dev": {
       "cache": false
-    },
-    "db:dev:up": {
-      "cache": false
     }
   }
 }
