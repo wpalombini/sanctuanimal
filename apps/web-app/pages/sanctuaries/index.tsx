@@ -38,7 +38,7 @@ const SanctuariesPage = () => {
       >
         {sanctuariesData?.sanctuaries.map(sanctuary => (
           <Box key={sanctuary.id} sx={{ width: { xs: '100%', md: '50%' } }}>
-            <LinkMUI href={`/sanctuary/${sanctuary.id}/residents`} component={Link}>
+            <LinkMUI href={`/sanctuaries/${sanctuary.id}`} component={Link}>
               <SanctuaryItem {...sanctuary} />
             </LinkMUI>
           </Box>

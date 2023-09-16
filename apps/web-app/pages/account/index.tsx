@@ -1,5 +1,3 @@
-import { Box, Button, Link as LinkMUI } from '@sanctuanimal/ui';
-import Link from 'next/link';
 import { useState } from 'react';
 
 import AccountDetails from '@/components/account/account-details';
@@ -54,12 +52,6 @@ const AccountPage = () => {
 
   return (
     <PageBodyContainer>
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <LinkMUI href="/sanctuaries" component={Link} sx={{ width: { xs: '100%', sm: '25%' } }}>
-          <Button sx={{ width: '100%' }}>Sanctuaries</Button>
-        </LinkMUI>
-      </Box>
-
       <AccountDetails
         account={sanctuariesData?.user}
         editAccount={editAccount}

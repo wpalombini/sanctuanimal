@@ -1,20 +1,29 @@
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 
+import { useAuthContext } from '@/components/providers';
 import SanctuaryDetails from '@/components/sanctuaries/sanctuary-details';
 import { SanctuaryDetailsForm } from '@/components/sanctuaries/sanctuary-details/sanctuary-details-edit';
+import { NewResidentBtnContainer, PageBodyContainer, SpinnerPage } from '@/components/ui';
 import { trpc } from '@/lib/http/client/trpc';
 import { useNotificationStore } from '@/lib/stores';
-import { NotificationError, NotificationSuccess, SanctuaryOutput } from '@/lib/types';
+import { NotificationError, NotificationSuccess } from '@/lib/types';
 
-export const SanctuaryDetailsContainer = ({
-  sanctuaryData,
-}: {
-  sanctuaryData?: SanctuaryOutput;
-}) => {
+const SanctuaryDetailsPage = () => {
+  const params = useRouter();
+  const { user, loading: userIsLoading } = useAuthContext();
   const { setNotification } = useNotificationStore();
   const [editSanctuary, setEditSanctuary] = useState(false);
 
   const utils = trpc.useContext();
+
+  const { data: sanctuaryData, isLoading: sanctuaryDataIsLoading } = trpc.getSanctuaryById.useQuery(
+    { id: params.query.slug as string },
+    {
+      enabled: !!user,
+      staleTime: Infinity,
+    },
+  );
 
   const { isLoading: sanctuaryIsMutating, mutate: updateSanctuary } =
     trpc.updateSanctuary.useMutation({
@@ -30,6 +39,8 @@ export const SanctuaryDetailsContainer = ({
       },
     });
 
+  const dataIsLoading = userIsLoading || sanctuaryDataIsLoading;
+
   const onUpdateSanctuary = (formData: SanctuaryDetailsForm) => {
     updateSanctuary({
       ...formData,
@@ -37,8 +48,17 @@ export const SanctuaryDetailsContainer = ({
     });
   };
 
+  if (dataIsLoading) {
+    return (
+      <PageBodyContainer>
+        <SpinnerPage />
+      </PageBodyContainer>
+    );
+  }
+
   return (
-    <>
+    <PageBodyContainer>
+      {sanctuaryData?.id && <NewResidentBtnContainer sanctuaryId={sanctuaryData.id} />}
       <SanctuaryDetails
         editSanctuary={editSanctuary}
         isMutating={sanctuaryIsMutating}
@@ -46,6 +66,8 @@ export const SanctuaryDetailsContainer = ({
         setEditSanctuary={setEditSanctuary}
         upsertSanctuary={onUpdateSanctuary}
       />
-    </>
+    </PageBodyContainer>
   );
 };
+
+export default SanctuaryDetailsPage;

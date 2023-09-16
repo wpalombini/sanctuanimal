@@ -28,8 +28,8 @@ export const SanctuaryItem = ({ contact, name, role }: SanctuaryItemProps) => {
           </Box>
 
           {/* Role */}
-          <Box sx={{ paddingX: 1 }}>
-            <ItemLabel>Role:</ItemLabel>
+          <Box sx={{ paddingX: 1, width: { xs: '100%', sm: '50%' } }}>
+            <ItemLabel>Your role:</ItemLabel>
             <ItemValue>{role}</ItemValue>
           </Box>
         </Box>
