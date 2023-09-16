@@ -18,7 +18,7 @@ const NewResidentPage = () => {
       onSuccess(data) {
         utils.getResidents.invalidate();
         setNotification(NotificationSuccess);
-        replace(`/sanctuary/${data.sanctuaryId}/residents/${data.id}`);
+        replace(`/sanctuaries/${data.sanctuaryId}/residents/${data.id}`);
       },
       onError(error) {
         console.error('onError createResident', error);

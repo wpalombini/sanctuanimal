@@ -5,7 +5,7 @@ export const NewResidentBtnContainer = ({ sanctuaryId }: { sanctuaryId: string }
   return (
     <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
       <LinkMUI
-        href={`/sanctuary/${sanctuaryId}/residents/new`}
+        href={`/sanctuaries/${sanctuaryId}/residents/new`}
         component={Link}
         sx={{ width: { xs: '100%', sm: '25%' } }}
       >
