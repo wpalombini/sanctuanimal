@@ -32,8 +32,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   // const [error, setError] = useState<Error | undefined>();
 
   const queryClient = useQueryClient();
-  const { data: sanctuariesData } = trpc.getSanctuariesForAccount.useQuery(undefined, {
+
+  const { data: userData } = trpc.getOrCreateAccount.useQuery(undefined, {
     enabled: !!user,
+    staleTime: Infinity,
+  });
+
+  const { data: sanctuariesData } = trpc.getSanctuariesForAccount.useQuery(undefined, {
+    enabled: !!userData,
     staleTime: Infinity,
   });
 
@@ -68,11 +74,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     // if undefined, the query has not run yet.
-    if (!sanctuariesData || !user) return;
+    if (!sanctuariesData) return;
 
     // If no sanctuary exists, redirect to /account to create the sanctuary
     if (sanctuariesData.sanctuaries.length === 0) {
-      router.replace('/account');
+      router.replace('/sanctuaries');
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

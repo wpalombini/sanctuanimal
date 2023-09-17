@@ -2,6 +2,7 @@ import {
   createResident,
   createResidentHistoricalNote,
   createSanctuary,
+  getOrCreateAccount,
   getResidentById,
   getResidentHistoricalNotes,
   getResidents,
@@ -22,6 +23,7 @@ export const appRouter = router({
   updateSanctuary: updateSanctuary(),
 
   // Account
+  getOrCreateAccount: getOrCreateAccount(),
   updateAccount: updateAccount(),
 
   // Residents

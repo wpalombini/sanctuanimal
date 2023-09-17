@@ -1,6 +1,7 @@
 export * from './create-resident';
 export * from './create-resident-historical-note';
 export * from './create-sanctuary';
+export * from './get-or-create-account';
 export * from './get-resident-by-id';
 export * from './get-resident-historical-notes';
 export * from './get-residents';
