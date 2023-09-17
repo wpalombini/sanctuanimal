@@ -96,10 +96,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const idToken = await user?.getIdToken();
       if (!loading && !idToken && !publicPaths.includes(window.location.pathname.toLowerCase())) {
         // notify user about invalid session.
-        setNotification({
-          message: 'Your session expired, please login.',
-          type: NotificationType.Warning,
-        } as Notification);
+        // setNotification({
+        //   message: 'Your session expired, please login.',
+        //   type: NotificationType.Warning,
+        // } as Notification);
         // execute proper logout process.
         logout();
       }
