@@ -15,6 +15,8 @@ import { trpc } from '@/lib/http/client/trpc';
 import { useNotificationStore } from '@/lib/stores';
 import { Notification, NotificationType } from '@/lib/types';
 
+import { PageBodyContainer, SpinnerPage } from '../ui';
+
 type AuthContextType = {
   loading: boolean;
   loginWithGoogle: () => Promise<UserCredential>;
@@ -33,15 +35,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const queryClient = useQueryClient();
 
-  const { data: userData } = trpc.getOrCreateAccount.useQuery(undefined, {
-    enabled: !!user,
-    staleTime: Infinity,
-  });
+  const { data: userData, isFetching: accountDataIsLoading } = trpc.getOrCreateAccount.useQuery(
+    undefined,
+    {
+      enabled: !!user,
+      staleTime: Infinity,
+    },
+  );
 
-  const { data: sanctuariesData } = trpc.getSanctuariesForAccount.useQuery(undefined, {
-    enabled: !!userData,
-    staleTime: Infinity,
-  });
+  const { data: sanctuariesData, isFetching: sanctuaryDataIsLoading } =
+    trpc.getSanctuariesForAccount.useQuery(undefined, {
+      enabled: !!userData,
+      staleTime: Infinity,
+    });
 
   const { setNotification } = useNotificationStore();
 
@@ -108,6 +114,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.events, user, loading]);
+
+  if (accountDataIsLoading || sanctuaryDataIsLoading) {
+    console.log('accountDataIsLoading', accountDataIsLoading);
+    console.log('sanctuaryDataIsLoading', sanctuaryDataIsLoading);
+    return (
+      <PageBodyContainer>
+        <SpinnerPage />
+      </PageBodyContainer>
+    );
+  }
 
   return (
     <AuthContext.Provider value={{ loading, loginWithGoogle, logout, user }}>

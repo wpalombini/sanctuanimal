@@ -16,7 +16,7 @@ export const getSanctuariesForAccount = () => {
       },
     });
 
-    if (!user || user.deletedAt !== null) return { sanctuaries: [], user: null }; //throw new TRPCError({ code: 'PRECONDITION_FAILED' });
+    if (!user || user.deletedAt !== null) return { sanctuaries: [], user: null };
 
     const userSanctuaries = await prisma.userSanctuary.findMany({
       where: {
