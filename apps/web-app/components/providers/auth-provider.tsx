@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const { data: sanctuariesData, isFetching: sanctuaryDataIsLoading } =
     trpc.getSanctuariesForAccount.useQuery(undefined, {
-      enabled: !!userData,
+      enabled: !!user && !!userData,
       staleTime: Infinity,
     });
 
@@ -55,6 +55,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const logout = async () => {
     queryClient.removeQueries();
+    setUser(null);
 
     router.replace('/');
     rawLogout();
@@ -116,8 +117,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, [router.events, user, loading]);
 
   if (accountDataIsLoading || sanctuaryDataIsLoading) {
-    console.log('accountDataIsLoading', accountDataIsLoading);
-    console.log('sanctuaryDataIsLoading', sanctuaryDataIsLoading);
     return (
       <PageBodyContainer>
         <SpinnerPage />
