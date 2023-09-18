@@ -12,8 +12,6 @@ import {
   UserCredential,
 } from '@/lib/firebase/client';
 import { trpc } from '@/lib/http/client/trpc';
-import { useNotificationStore } from '@/lib/stores';
-import { Notification, NotificationType } from '@/lib/types';
 
 import { PageBodyContainer, SpinnerPage } from '../ui';
 
@@ -48,8 +46,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       enabled: !!user && !!userData,
       staleTime: Infinity,
     });
-
-  const { setNotification } = useNotificationStore();
 
   const router = useRouter();
 
@@ -95,11 +91,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const onRouteChangeComplete = async () => {
       const idToken = await user?.getIdToken();
       if (!loading && !idToken && !publicPaths.includes(window.location.pathname.toLowerCase())) {
-        // notify user about invalid session.
-        // setNotification({
-        //   message: 'Your session expired, please login.',
-        //   type: NotificationType.Warning,
-        // } as Notification);
         // execute proper logout process.
         logout();
       }

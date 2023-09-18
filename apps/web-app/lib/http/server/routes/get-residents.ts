@@ -7,10 +7,10 @@ import { protectedProcedure } from '../trpc';
 
 export const getResidents = () => {
   return protectedProcedure
-    .input(z.object({ sanctuaryId: z.string().uuid() }))
+    .input(z.object({ sanctuaryId: z.string().uuid(), searchTerm: z.string().optional() }))
     .query(async opts => {
       const { user: authUser } = opts.ctx;
-      const { sanctuaryId } = opts.input;
+      const { sanctuaryId, searchTerm } = opts.input;
 
       if (!authUser.email) throw new TRPCError({ code: 'PRECONDITION_FAILED' });
 
@@ -33,7 +33,7 @@ export const getResidents = () => {
         throw new TRPCError({ code: userSanctuaries.length === 0 ? 'FORBIDDEN' : 'CONFLICT' });
 
       try {
-        return await prisma.animal.findMany({
+        const residents = await prisma.animal.findMany({
           where: {
             sanctuaryId,
             deletedAt: null,
@@ -50,6 +50,19 @@ export const getResidents = () => {
             dateOfBirth: true,
           },
         });
+
+        // For now, filter the list of residents on the business layer, not on db layer
+        if (searchTerm) {
+          const searchTermLowerCase = searchTerm.toLowerCase();
+          return residents.filter(
+            resident =>
+              resident.name.toLowerCase().includes(searchTermLowerCase) ||
+              resident.species.toLowerCase().includes(searchTermLowerCase) ||
+              resident.breed.toLowerCase().includes(searchTermLowerCase),
+          );
+        } else {
+          return residents;
+        }
       } catch (error) {
         console.error(`Error getResidents for account ${authUser.email}`, error);
         throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'An error occurred' });

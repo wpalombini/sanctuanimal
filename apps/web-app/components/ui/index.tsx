@@ -8,4 +8,5 @@ export * from './navigation-loading-bar';
 export * from './new-resident-btn';
 export * from './notifications';
 export * from './page-body-container';
+export * from './search-field';
 export * from './spinner-page';
