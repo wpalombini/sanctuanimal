@@ -1,16 +1,11 @@
-import { Box, Card, Link as LinkMUI } from '@sanctuanimal/ui';
+import { Box, Card, Link as LinkMUI, Spinner } from '@sanctuanimal/ui';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import { useAuthContext } from '@/components/providers';
 import { ResidentItem } from '@/components/residents/resident-item';
-import {
-  NewResidentBtnContainer,
-  PageBodyContainer,
-  SearchField,
-  SpinnerPage,
-} from '@/components/ui';
+import { NewResidentBtnContainer, PageBodyContainer, SearchField } from '@/components/ui';
 import { trpc } from '@/lib/http/client/trpc';
 
 const ResidentsPage = () => {
@@ -45,14 +40,6 @@ const ResidentsPage = () => {
     setSearchTerm(query);
   };
 
-  if (dataIsLoading) {
-    return (
-      <PageBodyContainer>
-        <SpinnerPage />
-      </PageBodyContainer>
-    );
-  }
-
   return (
     <PageBodyContainer>
       {/* New resident button */}
@@ -68,13 +55,21 @@ const ResidentsPage = () => {
       </Card>
 
       {/* List of residents */}
-      {residents?.map(resident => (
-        <Box key={resident.id}>
-          <LinkMUI href={`/sanctuaries/${sanctuaryId}/residents/${resident.id}`} component={Link}>
-            <ResidentItem resident={resident} />
-          </LinkMUI>
+      {dataIsLoading ? (
+        <Box
+          sx={{ display: 'flex', justifyContent: 'center', height: '100%', position: 'absolute' }}
+        >
+          <Spinner />
         </Box>
-      ))}
+      ) : (
+        residents?.map(resident => (
+          <Box key={resident.id}>
+            <LinkMUI href={`/sanctuaries/${sanctuaryId}/residents/${resident.id}`} component={Link}>
+              <ResidentItem resident={resident} />
+            </LinkMUI>
+          </Box>
+        ))
+      )}
     </PageBodyContainer>
   );
 };
