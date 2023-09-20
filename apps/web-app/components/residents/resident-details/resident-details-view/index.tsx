@@ -1,4 +1,5 @@
 import { Avatar, Box, CardContent, Typography } from '@sanctuanimal/ui';
+import Image from 'next/image';
 
 import { DisplayField } from '@/components/ui';
 import { getLabelForGenderValue } from '@/lib/utils';
@@ -19,11 +20,9 @@ const ResidentDetailsView = ({ residentData }: ResidentDetailsViewProps) => {
   return (
     <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
       <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' } }}>
-        <Avatar
-          alt="SanctuAnimal logo"
-          src="/generic-profile.webp"
-          sx={{ height: { xs: 50, md: 200 }, width: { xs: 50, md: 200 } }}
-        />
+        <Avatar sx={{ height: { xs: 50, md: 200 }, width: { xs: 50, md: 200 } }}>
+          <Image alt="Unknown resident profile picture" src="/generic-profile.webp" fill />
+        </Avatar>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, padding: { xs: 0, md: 5 } }}>
           <Typography variant="h4" noWrap>
             {residentData?.name}

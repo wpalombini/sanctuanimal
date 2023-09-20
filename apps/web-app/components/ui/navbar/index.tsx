@@ -7,6 +7,7 @@ import {
   Toolbar,
   Typography,
 } from '@sanctuanimal/ui';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -46,11 +47,14 @@ export const NavBar = () => {
               <LinkMUI color="inherit" href="/" component={Link}>
                 <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                   <Box sx={{ paddingRight: 2 }}>
-                    <Avatar
-                      alt="SanctuAnimal logo"
-                      src="/logo/sanctuanimal-logo-v1a.jpg"
-                      sx={{ height: 50, width: 50 }}
-                    />
+                    <Avatar sx={{ height: 50, width: 50 }}>
+                      <Image
+                        alt="SanctuAnimal logo"
+                        src="/logo/sanctuanimal-logo-v1a.jpg"
+                        width={50}
+                        height={50}
+                      />
+                    </Avatar>
                   </Box>
                 </Box>
               </LinkMUI>
