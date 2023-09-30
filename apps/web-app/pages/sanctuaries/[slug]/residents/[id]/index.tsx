@@ -66,7 +66,7 @@ const ResidentDetailsPage = () => {
       <ResidentDetails
         editResident={editResident}
         isMutating={updateResidentIsMutating}
-        residentData={residentData as ResidentDetailsForm}
+        residentData={residentData as ResidentDetailsForm | undefined}
         setEditResident={setEditResident}
         upsertResident={onUpdateResident}
       />

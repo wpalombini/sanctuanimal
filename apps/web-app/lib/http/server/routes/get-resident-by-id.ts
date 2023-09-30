@@ -5,6 +5,17 @@ import { prisma } from '@/lib/prisma';
 
 import { protectedProcedure } from '../trpc';
 
+// https://github.com/prisma/studio/issues/614
+declare global {
+  interface BigInt {
+    toJSON(): string;
+  }
+}
+
+BigInt.prototype.toJSON = function () {
+  return this.toString();
+};
+
 export const getResidentById = () => {
   return protectedProcedure
     .input(z.object({ sanctuaryId: z.string().uuid(), id: z.string().uuid() }))

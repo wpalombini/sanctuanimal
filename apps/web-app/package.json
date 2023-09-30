@@ -19,6 +19,7 @@
     "@trpc/next": "^10.25.0",
     "@trpc/react-query": "^10.25.0",
     "@trpc/server": "^10.25.0",
+    "cloudinary": "^1.41.0",
     "dayjs": "^1.11.9",
     "firebase": "^10.1.0",
     "firebase-admin": "^11.10.1",

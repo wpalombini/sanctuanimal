@@ -35,6 +35,11 @@ const residentSchema = z.object({
     .optional()
     .nullable()
     .transform(value => (value === '' ? null : value)),
+  profileImageVersion: z
+    .literal('')
+    .transform(() => undefined)
+    .or(z.coerce.number())
+    .optional(),
 });
 
 const idSchema = z.string().uuid('Invalid id');

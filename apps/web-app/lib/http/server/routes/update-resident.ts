@@ -42,6 +42,7 @@ export const updateResident = () => {
           gender: input.gender,
           dateOfBirth: input.dateOfBirth,
           bio: input.bio,
+          profileImageVersion: input.profileImageVersion,
         },
       });
 
