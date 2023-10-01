@@ -10,4 +10,5 @@ export * from './get-sanctuary-by-id';
 export * from './update-account';
 export * from './update-resident';
 export * from './update-resident-general-notes';
+export * from './update-resident-profile-image';
 export * from './update-sanctuary';

@@ -1,7 +1,7 @@
 import { Card, CardHeader, CreateIcon, IconButton } from '@sanctuanimal/ui';
 
 import ResidentDetailsEdit, { ResidentDetailsForm } from './resident-details-edit';
-import ResidentDetailsView from './resident-details-view';
+import ResidentDetailsView, { ResidentDetailsFormProps } from './resident-details-view';
 
 export type ResidentDetailsProps = {
   editResident: boolean;
@@ -45,7 +45,9 @@ const ResidentDetails = ({
           upsertResident={onUpsertResident}
         />
       )}
-      {!editResident && <ResidentDetailsView residentData={residentData} />}
+      {!editResident && (
+        <ResidentDetailsView residentData={residentData as ResidentDetailsFormProps} />
+      )}
     </Card>
   );
 };

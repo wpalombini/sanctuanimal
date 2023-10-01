@@ -11,6 +11,7 @@ import {
   updateAccount,
   updateResident,
   updateResidentGeneralNotes,
+  updateResidentProfileImage,
   updateSanctuary,
 } from './routes';
 import { router } from './trpc';
@@ -31,6 +32,7 @@ export const appRouter = router({
   getResidents: getResidents(),
   getResidentById: getResidentById(),
   updateResident: updateResident(),
+  updateResidentProfileImage: updateResidentProfileImage(),
 
   // Resident notes
   createResidentHistoricalNote: createResidentHistoricalNote(),

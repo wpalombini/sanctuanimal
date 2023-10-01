@@ -1,19 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  Avatar,
-  Box,
-  Button,
-  CardContent,
-  CreateIcon,
-  DatePicker,
-  InputBase,
-  Link,
-  MenuItem,
-  TextField,
-} from '@sanctuanimal/ui';
+import { Button, CardContent, DatePicker, InputBase, MenuItem, TextField } from '@sanctuanimal/ui';
 import dayjs, { Dayjs } from 'dayjs';
-import { useRouter } from 'next/router';
-import { CldImage, CldUploadWidget } from 'next-cloudinary';
 import { Controller, useForm } from 'react-hook-form';
 import { TypeOf } from 'zod';
 
@@ -36,9 +23,6 @@ const ResidentDetailsEdit = ({
   setEditResident,
   upsertResident,
 }: ResidentDetailsEditProps) => {
-  const { query } = useRouter();
-  const residentId = query.id as string;
-
   const residentForm = useForm<ResidentDetailsForm>({
     mode: 'onChange',
     resolver: zodResolver(clientCreateResidentSchema),
@@ -59,11 +43,6 @@ const ResidentDetailsEdit = ({
 
   return (
     <form autoComplete="off" onSubmit={residentForm.handleSubmit(onSubmitResidentDetailsHandler)}>
-      <input
-        type="hidden"
-        {...residentForm.register('profileImageVersion')}
-        defaultValue={residentData?.profileImageVersion || undefined}
-      />
       <CardContent
         sx={{
           display: 'flex',
@@ -71,86 +50,6 @@ const ResidentDetailsEdit = ({
           gap: 4,
         }}
       >
-        <CldUploadWidget
-          options={{
-            cropping: true,
-            croppingAspectRatio: 1,
-            croppingCoordinatesMode: 'custom',
-            multiple: false,
-            publicId: `${residentId}`,
-            sources: ['local'],
-            showSkipCropButton: false,
-            showPoweredBy: false,
-            tags: ['profile', `${process.env.NEXT_PUBLIC_ENVIRONMENT}`],
-          }}
-          signatureEndpoint="/api/cloudinary/sign" // https://cloudinary.com/blog/guest_post/signed-uploads-in-cloudinary-with-next-js
-          uploadPreset="profile-preset"
-        >
-          {({ open, results, error, isLoading }) => {
-            if (results?.event === 'success') {
-              const info = results.info as { version: number };
-              if (!isNaN(info.version)) {
-                residentForm.setValue('profileImageVersion', info.version);
-                residentForm.handleSubmit(onSubmitResidentDetailsHandler)();
-              }
-            }
-
-            if (error) {
-              console.error('error', error);
-            }
-
-            return (
-              <Link
-                component="button"
-                onClick={e => {
-                  e.preventDefault();
-                  open();
-                }}
-              >
-                <Box
-                  sx={{
-                    position: 'relative',
-                    height: { xs: 50, md: 200 },
-                    width: { xs: 50, md: 200 },
-                  }}
-                >
-                  <Avatar sx={{ height: '100%', width: '100%' }}>
-                    {
-                      /*!profileImageHasError */ !!residentData?.profileImageVersion &&
-                      !isLoading ? (
-                        <CldImage
-                          alt="Resident profile picture edit"
-                          src={`sanctuanimal/profile/${residentId}`}
-                          version={residentData?.profileImageVersion}
-                          fill
-                        />
-                      ) : null
-                    }
-                  </Avatar>
-
-                  <Avatar
-                    sx={{
-                      bgcolor: 'white',
-                      border: 2,
-                      borderColor: 'primary.main',
-                      bottom: { xs: 1, md: 10 },
-                      color: 'primary.main',
-                      position: 'absolute',
-                      left: { xs: 35, md: 150 },
-                      height: { xs: '30%', md: '20%' },
-                      width: { xs: '30%', md: '20%' },
-                    }}
-                  >
-                    <CreateIcon
-                      sx={{ width: '100%', height: '100%', padding: { xs: 0, md: 0.5 } }}
-                    />
-                  </Avatar>
-                </Box>
-              </Link>
-            );
-          }}
-        </CldUploadWidget>
-
         <TextField
           label="Name *"
           placeholder="Enter the resident name"

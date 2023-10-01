@@ -1,14 +1,17 @@
-import { Avatar, Box, CardContent, Typography } from '@sanctuanimal/ui';
-import { useRouter } from 'next/router';
-import { CldImage } from 'next-cloudinary';
+import { Box, CardContent, Typography } from '@sanctuanimal/ui';
 
 import { DisplayField } from '@/components/ui';
 import { getLabelForGenderValue } from '@/lib/utils';
 
 import { ResidentDetailsForm } from '../resident-details-edit';
+import { ResidentDetailsProfileImageEditor } from './profile-image-editor';
+
+export type ResidentDetailsFormProps = {
+  id: string;
+} & ResidentDetailsForm;
 
 type ResidentDetailsViewProps = {
-  residentData?: ResidentDetailsForm;
+  residentData?: ResidentDetailsFormProps;
 };
 
 const ResidentDetailsContainer = ({ children }: { children: React.ReactNode }) => (
@@ -18,22 +21,13 @@ const ResidentDetailsContainer = ({ children }: { children: React.ReactNode }) =
 );
 
 const ResidentDetailsView = ({ residentData }: ResidentDetailsViewProps) => {
-  const { query } = useRouter();
-  const residentId = query.id as string;
-
   return (
     <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
       <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' } }}>
-        <Avatar sx={{ height: { xs: 50, md: 200 }, width: { xs: 50, md: 200 } }}>
-          {residentData?.profileImageVersion ? (
-            <CldImage
-              alt="Resident profile picture"
-              src={`sanctuanimal/profile/${residentId}`}
-              version={residentData?.profileImageVersion}
-              fill
-            />
-          ) : null}
-        </Avatar>
+        <ResidentDetailsProfileImageEditor
+          residentId={residentData?.id}
+          profileImageVersion={residentData?.profileImageVersion}
+        />
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, padding: { xs: 0, md: 5 } }}>
           <Typography variant="h4" noWrap>
             {residentData?.name}
