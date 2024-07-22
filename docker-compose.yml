@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  postgres15:
+    image: postgres:15.4
+    container_name: orm
+    restart: unless-stopped
+    env_file:
+      - ./packages/orm/.env
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
+  emulators:
+    image: node:18-alpine
+    container_name: emulators
+    restart: 'no'
+    working_dir: /app
+    ports:
+      - '9099:9099'
+      - '4000:4000'
+      - '4400:4400'
+      - '4500:4500'
+    command: /bin/sh -c "npm i -g firebase-tools && npm run start:emulators"
+    volumes:
+      - .:/app:rw
+volumes:
+  postgres:
