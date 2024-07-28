@@ -1,5 +1,5 @@
-version: '3.8'
 services:
+  # 1. Postgres 15
   postgres15:
     image: postgres:15.4
     container_name: orm
@@ -11,8 +11,9 @@ services:
     ports:
       - '5432:5432'
 
+  # 2. Firebase Emulators
   emulators:
-    image: node:18-alpine
+    image: node:20-alpine
     container_name: emulators
     restart: 'no'
     working_dir: /app
@@ -21,8 +22,38 @@ services:
       - '4000:4000'
       - '4400:4400'
       - '4500:4500'
-    command: /bin/sh -c "npm i -g firebase-tools && npm run start:emulators"
+    command: npm run start:emulators
     volumes:
       - .:/app:rw
+
+  # 3. Web App
+  # app:
+  #   container_name: app
+  #   command: pnpm dev
+  #   develop:
+  #     watch:
+  #       - action: rebuild
+  #         path: '.'
+  #         ignore:
+  #           - '**/.git/**'
+  #           - '**/.next/**'
+  #           - '**/node_modules/**'
+  #           - '**/.vscode/**'
+  #           - '**/.turbo/**'
+  #           - '**/dist/**'
+  #           - '**/generated/**'
+  #           - '**/.prisma/**'
+  #   build:
+  #     dockerfile_inline: |
+  #       FROM node:20-alpine
+  #       WORKDIR /app
+  #       RUN npm install -g pnpm
+  #   stdin_open: true
+  #   working_dir: /app
+  #   volumes:
+  #     - .:/app:rw
+  #   ports:
+  #     - '3000:3000'
+
 volumes:
   postgres:
