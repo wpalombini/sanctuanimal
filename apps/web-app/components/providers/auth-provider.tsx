@@ -33,13 +33,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const queryClient = useQueryClient();
 
-  const { data: userData, isFetching: accountDataIsLoading } = trpc.getOrCreateAccount.useQuery(
-    undefined,
-    {
-      enabled: !!user,
-      staleTime: Infinity,
-    },
-  );
+  const {
+    data: userData,
+    isFetching: accountDataIsLoading,
+    error,
+  } = trpc.getOrCreateAccount.useQuery(undefined, {
+    enabled: !!user,
+    staleTime: Infinity,
+  });
 
   const { data: sanctuariesData, isFetching: sanctuaryDataIsLoading } =
     trpc.getSanctuariesForAccount.useQuery(undefined, {
@@ -90,7 +91,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const onRouteChangeComplete = async () => {
       const idToken = await user?.getIdToken();
-      if (!loading && !idToken && !publicPaths.includes(window.location.pathname.toLowerCase())) {
+      if (
+        error?.data?.code === 'UNAUTHORIZED' ||
+        (!loading && !idToken && !publicPaths.includes(window.location.pathname.toLowerCase()))
+      ) {
         // execute proper logout process.
         logout();
       }
@@ -105,7 +109,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       router.events.off('routeChangeComplete', onRouteChangeComplete);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.events, user, loading]);
+  }, [router.events, user, loading, error]);
 
   if (accountDataIsLoading || sanctuaryDataIsLoading) {
     return (
