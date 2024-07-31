@@ -5,6 +5,7 @@
   "types": "./generated/index.d.ts",
   "scripts": {
     "build": "prisma generate",
+    "dev": "prisma generate",
     "vercel-build": "prisma generate",
     "db:dev:up": "docker compose up",
     "db:dev:seed": "prisma db seed"

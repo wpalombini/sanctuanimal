@@ -28,7 +28,7 @@ export const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig
 export const auth = getAuth(firebaseApp);
 
 if (!isEnvProduction()) {
-  connectAuthEmulator(auth, 'http://localhost:9099');
+  connectAuthEmulator(auth, 'http://127.0.0.1:9099');
 }
 
 export const getUserTokenId = async (): Promise<string | undefined> => {

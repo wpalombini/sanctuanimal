@@ -28,33 +28,37 @@ services:
       - .:/app:rw
 
   # 3. Web App
-  # app:
-  #   container_name: app
-  #   command: pnpm dev
-  #   develop:
-  #     watch:
-  #       - action: rebuild
-  #         path: '.'
-  #         ignore:
-  #           - '**/.git/**'
-  #           - '**/.next/**'
-  #           - '**/node_modules/**'
-  #           - '**/.vscode/**'
-  #           - '**/.turbo/**'
-  #           - '**/dist/**'
-  #           - '**/generated/**'
-  #           - '**/.prisma/**'
-  #   build:
-  #     dockerfile_inline: |
-  #       FROM node:20-alpine
-  #       WORKDIR /app
-  #       RUN npm install -g pnpm
-  #   stdin_open: true
-  #   working_dir: /app
-  #   volumes:
-  #     - .:/app:rw
-  #   ports:
-  #     - '3000:3000'
+  app:
+    container_name: app
+    command: pnpm dev
+    develop:
+      watch:
+        - action: rebuild
+          path: '.'
+          ignore:
+            - '**/.git/**'
+            - '**/.next/**'
+            - '**/node_modules/**'
+            - '**/.vscode/**'
+            - '**/.turbo/**'
+            - '**/dist/**'
+            - '**/generated/**'
+            - '**/.prisma/**'
+    build:
+      dockerfile_inline: |
+        FROM node:20-alpine
+        WORKDIR /app
+        RUN npm install -g pnpm
+    stdin_open: true
+    working_dir: /app
+    user: '${UID}:${GID}'
+    depends_on:
+      - postgres15
+      - emulators
+    volumes:
+      - .:/app:rw
+    ports:
+      - '3000:3000'
 
 volumes:
   postgres:
