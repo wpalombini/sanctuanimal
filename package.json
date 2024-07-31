@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@sanctuanimal/eslint-config": "workspace:*",
-    "firebase-tools": "^13.13.3",
+    "firebase-tools": "^13.14.2",
     "prettier": "^2.8.7",
     "turbo": "^1.9.3"
   },

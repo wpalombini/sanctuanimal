@@ -23,6 +23,7 @@ services:
       - '4400:4400'
       - '4500:4500'
     command: npm run start:emulators
+    user: '${UID}:${GID}'
     volumes:
       - .:/app:rw
 
