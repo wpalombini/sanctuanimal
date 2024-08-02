@@ -23,7 +23,7 @@ services:
       - '4400:4400'
       - '4500:4500'
     command: npm run start:emulators
-    user: '${UID}:${GID}'
+    user: node
     volumes:
       - .:/app:rw
 
@@ -51,7 +51,7 @@ services:
         RUN npm install -g pnpm
     stdin_open: true
     working_dir: /app
-    user: '${UID}:${GID}'
+    user: node
     depends_on:
       - postgres15
       - emulators
