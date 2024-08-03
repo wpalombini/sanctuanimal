@@ -14,12 +14,10 @@
     "lint": "turbo run lint --no-daemon",
     "format": "prettier --check \"**/*.{ts,tsx,md}\"",
     "format:fix": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "db:dev:up": "docker compose up",
-    "start:emulators": "npx firebase emulators:start --project=sanctuanimal-ac8d0 --only auth --import=./emulators-data --export-on-exit=./emulators-data"
+    "db:dev:up": "docker compose up"
   },
   "devDependencies": {
     "@sanctuanimal/eslint-config": "workspace:*",
-    "firebase-tools": "^13.14.2",
     "prettier": "^2.8.7",
     "turbo": "^1.9.3"
   },

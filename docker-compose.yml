@@ -13,19 +13,24 @@ services:
 
   # 2. Firebase Emulators
   emulators:
-    image: node:20-alpine
     container_name: emulators
     restart: 'no'
-    working_dir: /app
+    working_dir: /emulators
     ports:
       - '9099:9099'
       - '4000:4000'
       - '4400:4400'
       - '4500:4500'
-    command: npm run start:emulators
-    user: node
+    build:
+      dockerfile_inline: |
+        FROM node:20-alpine
+        WORKDIR /emulators
+        COPY ./firebase.json /emulators/firebase.json
+        COPY ./.firebaserc /emulators/.firebaserc
+        RUN npm install -g firebase-tools@13.15.0
+    command: npx firebase emulators:start --project=sanctuanimal-ac8d0 --only auth --import=./emulators-data --export-on-exit=./emulators-data
     volumes:
-      - .:/app:rw
+      - emulators:/emulators
 
   # 3. Web App
   app:
@@ -61,4 +66,5 @@ services:
       - '3000:3000'
 
 volumes:
+  emulators:
   postgres:
