@@ -47,4 +47,5 @@ COPY --from=installer --chown=nextjs:nodejs /app/apps/web-app/.next/static ./app
 
 EXPOSE 3000
 
-CMD npx prisma migrate deploy;node apps/web-app/server.js
+# Run migration and start the app
+CMD ["sh", "-c", "npx prisma migrate deploy && node apps/web-app/server.js"]

@@ -19,7 +19,7 @@
   "devDependencies": {
     "@sanctuanimal/eslint-config": "workspace:*",
     "prettier": "^2.8.7",
-    "turbo": "^1.9.3"
+    "turbo": "^2.1.2"
   },
   "engines": {
     "node": ">=20.0.0"
