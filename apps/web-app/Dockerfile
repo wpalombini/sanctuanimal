@@ -1,4 +1,4 @@
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 RUN apk add --no-cache libc6-compat
 RUN apk update
 # Set working directory
@@ -9,7 +9,7 @@ COPY . .
 RUN pnpm turbo prune --scope=web-app --docker
 
 # Add lockfile and package.json's of isolated subworkspace
-FROM node:18-alpine AS installer
+FROM node:20-alpine AS installer
 RUN apk add --no-cache libc6-compat
 RUN apk update
 WORKDIR /app
@@ -26,7 +26,7 @@ RUN npm i -g pnpm
 RUN pnpm install --frozen-lockfile
 RUN pnpm turbo run build --filter=web-app...
 
-FROM node:18-alpine AS runner
+FROM node:20-alpine AS runner
 WORKDIR /app
 
 # Don't run production as root
