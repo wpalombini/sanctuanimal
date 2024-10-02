@@ -7,9 +7,9 @@ import {
   Toolbar,
   Typography,
 } from '@sanctuanimal/ui';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { CldImage } from 'next-cloudinary';
 
 import { useAuthContext } from '@/components/providers';
 import { trpc } from '@/lib/http/client/trpc';
@@ -48,11 +48,11 @@ export const NavBar = () => {
                 <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                   <Box sx={{ paddingRight: 2 }}>
                     <Avatar sx={{ height: 50, width: 50 }}>
-                      <Image
+                      <CldImage
                         alt="SanctuAnimal logo"
-                        src="/logo/sanctuanimal-logo-v1a.jpg"
-                        width={50}
-                        height={50}
+                        src="sanctuanimal/public/logo/sanctuanimal-logo"
+                        fill
+                        resize={{ width: 100 }}
                       />
                     </Avatar>
                   </Box>
