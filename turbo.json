@@ -3,6 +3,8 @@
   "globalDependencies": ["**/.env.*local"],
   "globalEnv": [
     "CLOUDINARY_API_SECRET",
+    "DATABASE_URL",
+    "DIRECT_URL",
     "FIREBASE_SERVICE_ACCOUNT_CLIENT_EMAIL",
     "FIREBASE_SERVICE_ACCOUNT_PRIVATE_KEY",
     "NEXT_PUBLIC_BASE_URL",
@@ -22,6 +24,8 @@
       "cache": false,
       "dependsOn": ["^build"],
       "env": [
+        "DATABASE_URL",
+        "DIRECT_URL",
         "FIREBASE_SERVICE_ACCOUNT_CLIENT_EMAIL",
         "FIREBASE_SERVICE_ACCOUNT_PRIVATE_KEY",
         "NEXT_PUBLIC_BASE_URL",
@@ -40,6 +44,8 @@
       "cache": false,
       "dependsOn": ["^build"],
       "env": [
+        "DATABASE_URL",
+        "DIRECT_URL",
         "CLOUDINARY_API_SECRET",
         "FIREBASE_SERVICE_ACCOUNT_CLIENT_EMAIL",
         "FIREBASE_SERVICE_ACCOUNT_PRIVATE_KEY",
@@ -66,6 +72,8 @@
       "cache": false,
       "dependsOn": ["^build"],
       "env": [
+        "DATABASE_URL",
+        "DIRECT_URL",
         "FIREBASE_SERVICE_ACCOUNT_CLIENT_EMAIL",
         "FIREBASE_SERVICE_ACCOUNT_PRIVATE_KEY",
         "NEXT_PUBLIC_BASE_URL",
